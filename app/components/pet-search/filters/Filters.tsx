@@ -11,7 +11,7 @@ type FormDataObject = {
 export default function Filters() {
   const { queryParams, setQueryParams } = useQueryParams();
 
-  const handleFormChange = async (e: FormEvent<HTMLFormElement>) => {
+  const handleFormChange = (e: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget);
     const ageChannel = formData.getAll("age");
     const sexChannel = formData.getAll("sex");
@@ -20,16 +20,19 @@ export default function Filters() {
     userForm.age = ageChannel.toString();
     userForm.sex = sexChannel.toString();
     userForm.size = sizeChannel.toString();
-    setQueryParams(userForm as Record<string, string>);
+
+    setQueryParams({ ...(userForm as Record<string, string>), page: "1" });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   return (
     <form
       className="grid w-full grid-cols-2 gap-6 bg-gray-200 p-4 md:flex md:w-1/4 md:flex-col"
       onChange={handleFormChange}
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+      onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-1">
         <label htmlFor="species">Species</label>
@@ -37,9 +40,6 @@ export default function Filters() {
           name="species"
           id="species"
           defaultValue={queryParams.get("species")?.toString()}
-          onChange={(e) => {
-            setQueryParams({ species: e.target.value });
-          }}
         >
           <option value="">Any</option>
           <option value="dog">Dog</option>

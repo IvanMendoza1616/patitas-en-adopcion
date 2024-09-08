@@ -24,6 +24,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
         lat: data[0].lat,
         lon: data[0].lon,
         distance: "20",
+        page: "1",
       });
     setLoading(false);
   };
@@ -60,7 +61,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
             onClick={handleSubmitPostalCode}
             className="self-start bg-gray-300 px-4"
           >
-            {loading ? "Loading" : "Save"}
+            {loading ? "Loading" : "Search"}
           </button>
         </div>
       </div>
@@ -81,6 +82,8 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
                 lat: "",
                 lon: "",
                 distance: "",
+                sort: "",
+                page: "1",
               });
             }}
           >
@@ -95,14 +98,14 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
           id="distance"
           defaultValue={queryParams.get("distance")?.toString()}
           onChange={(e) => {
-            setQueryParams({ distance: e.target.value });
+            setQueryParams({ distance: e.target.value, page: "1" });
           }}
         >
           <option value="20">20 km or less</option>
           <option value="50">50 km or less</option>
           <option value="100">100 km or less</option>
           <option value="200">200 km or less</option>
-          <option value="">Any distance</option>
+          <option value="20038">Any distance</option>
         </select>
       </div>
     </div>

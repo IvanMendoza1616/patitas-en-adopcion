@@ -10,13 +10,13 @@ export default function Hero() {
         </div>
         <div className="mx-8 flex w-full flex-wrap items-center justify-center gap-16 bg-gray-200 p-8">
           <Link
-            href="/pet-search?species=dog"
+            href="/pet-search?species=dog&page=1"
             className="flex aspect-square w-[300px] items-center justify-center bg-gray-300"
           >
             Adopt a dog
           </Link>
           <Link
-            href="/pet-search?species=cat"
+            href="/pet-search?species=cat&page=1"
             className="flex aspect-square w-[300px] items-center justify-center bg-gray-300"
           >
             Adopt a cat

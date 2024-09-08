@@ -9,13 +9,22 @@ export default function LoadingPets() {
   );
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 bg-gray-200 p-4">
-      {loadingPet}
-      {loadingPet}
-      {loadingPet}
-      {loadingPet}
-      {loadingPet}
-      {loadingPet}
+    <div className="flex flex-col gap-4">
+      <div className="h-[56px] w-full animate-pulse bg-gray-200" />
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 bg-gray-200 p-4">
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+        {loadingPet}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 export type SearchParams = {
+  search?: string;
   species?: string;
   postalCode?: string;
   lat?: string;
