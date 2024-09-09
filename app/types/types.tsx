@@ -19,7 +19,6 @@ export type Pet = {
   birthdate: string;
   ownerId: string;
   species: string;
-  age: string;
   sex: string;
   size: string;
   lat: string;

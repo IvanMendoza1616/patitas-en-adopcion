@@ -8,6 +8,7 @@ import Pagination from "./Pagination";
 import Sort from "../Sort";
 import { useQueryParams } from "@/app/hooks/useQueryParams";
 import { formatDate, getAge } from "@/app/utils/formatDate";
+import { ageInRange } from "@/app/utils/ageInRange";
 
 type dataFetchedType = {
   data: Pet[];
@@ -54,7 +55,7 @@ export default function PetsGrid({ params }: Props) {
             !params.distance ||
             haversineFormula(+params.lat, +params.lon, +pet.lat, +pet.lon) <
               +params.distance) &&
-          (!params.age || params.age.split(",").includes(pet.age)) &&
+          (!params.age || ageInRange(params.age.split(","), pet.birthdate)) &&
           (!params.sex || params.sex.split(",").includes(pet.sex)) &&
           (!params.size || params.size.split(",").includes(pet.size)),
       );
@@ -112,7 +113,7 @@ export default function PetsGrid({ params }: Props) {
     getPets();
   }, [params]);
 
-  console.log(dataFetched);
+  //console.log(dataFetched);
 
   if (isLoading) return <LoadingPets />;
 
@@ -160,7 +161,6 @@ export default function PetsGrid({ params }: Props) {
             <div className="aspect-square w-32 bg-gray-400" />
             <p>{pet.name}</p>
             <p>{pet.species}</p>
-            <p>{pet.age}</p>
             <p>{pet.sex}</p>
             <p>{pet.size}</p>
             <p>{formatDate(pet.birthdate)}</p>

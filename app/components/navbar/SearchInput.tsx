@@ -20,7 +20,10 @@ export default function SearchInput() {
   };
 
   return (
-    <form className="flex gap-2" onSubmit={handleSubmit}>
+    <form
+      className="col-span-2 flex items-center justify-center gap-2 md:col-span-1"
+      onSubmit={handleSubmit}
+    >
       <label htmlFor="search">Search:</label>
       <input
         ref={inputRef}
@@ -31,7 +34,7 @@ export default function SearchInput() {
         type="text"
         name="search"
         id="search"
-        className="w-[20px] border px-2"
+        className="w-full border px-2 md:max-w-[200px]"
       />
     </form>
   );
