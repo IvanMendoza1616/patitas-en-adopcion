@@ -1,16 +1,18 @@
 "use client";
-import { Pet, SearchParams } from "@/app/types/types";
+import { Pet, QueryParams } from "@/app/types/types";
 import { petData } from "@/petData";
 import { useEffect, useState } from "react";
 import LoadingPets from "./LoadingPets";
 import { haversineFormula } from "@/app/utils/haversineFormula";
 import Pagination from "./Pagination";
 import Sort from "../Sort";
-import { useQueryParams } from "@/app/hooks/useQueryParams";
-import { formatDate, getAge } from "@/app/utils/formatDate";
+import { getAge } from "@/app/utils/formatDate";
 import { ageInRange } from "@/app/utils/ageInRange";
+import Link from "next/link";
+import { capitalizeFirstLetter } from "@/app/utils/textFormat";
+//import Image from "next/image";
 
-type dataFetchedType = {
+type DataFetchedType = {
   data: Pet[];
   pagination: {
     currentPage: number;
@@ -21,13 +23,12 @@ type dataFetchedType = {
 };
 
 type Props = {
-  params: SearchParams;
+  params: QueryParams;
 };
 
 export default function PetsGrid({ params }: Props) {
   const [isLoading, setIsLoading] = useState(true);
-  const { setQueryParams } = useQueryParams();
-  const [dataFetched, setDataFetched] = useState<dataFetchedType>({
+  const [dataFetched, setDataFetched] = useState<DataFetchedType>({
     data: [],
     pagination: {
       currentPage: 0,
@@ -42,6 +43,7 @@ export default function PetsGrid({ params }: Props) {
     const getPets = async () => {
       setIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
       //Filtering
       const filteredPets = petData.filter(
         (pet) =>
@@ -53,7 +55,7 @@ export default function PetsGrid({ params }: Props) {
             !params.lat ||
             !params.lon ||
             !params.distance ||
-            haversineFormula(+params.lat, +params.lon, +pet.lat, +pet.lon) <
+            haversineFormula(+params.lat, +params.lon, pet.lat, pet.lon) <
               +params.distance) &&
           (!params.age || ageInRange(params.age.split(","), pet.birthdate)) &&
           (!params.sex || params.sex.split(",").includes(pet.sex)) &&
@@ -65,20 +67,25 @@ export default function PetsGrid({ params }: Props) {
         const birthdateA = +new Date(petA.birthdate);
         const birthdateB = +new Date(petB.birthdate);
 
+        const updatedA = petA.updatedAt;
+        const updatedB = petB.updatedAt;
+
+        const distanceA =
+          (params.lat &&
+            params.lon &&
+            haversineFormula(+params.lat, +params.lon, petA.lat, petA.lon)) ||
+          0;
+        const distanceB =
+          (params.lat &&
+            params.lon &&
+            haversineFormula(+params.lat, +params.lon, petB.lat, petB.lon)) ||
+          0;
+
         if (params.sort === "youngest") return birthdateB - birthdateA;
         if (params.sort === "oldest") return birthdateA - birthdateB;
-        if (params.sort === "nearest" && params.lat && params.lon)
-          return (
-            haversineFormula(+params.lat, +params.lon, +petA.lat, +petA.lon) -
-            haversineFormula(+params.lat, +params.lon, +petB.lat, +petB.lon)
-          );
-
-        if (params.sort === "farthest" && params.lat && params.lon)
-          return (
-            haversineFormula(+params.lat, +params.lon, +petB.lat, +petB.lon) -
-            haversineFormula(+params.lat, +params.lon, +petA.lat, +petA.lon)
-          );
-
+        if (params.sort === "nearest") return distanceA - distanceB;
+        if (params.sort === "newest-addition") return updatedB - updatedA;
+        if (params.sort === "oldest-addition") return updatedA - updatedB;
         return 0;
       });
 
@@ -113,78 +120,62 @@ export default function PetsGrid({ params }: Props) {
     getPets();
   }, [params]);
 
-  //console.log(dataFetched);
-
-  if (isLoading) return <LoadingPets />;
-
-  if (dataFetched.data.length === 0)
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="flex h-[56px] w-full items-center gap-1 bg-gray-200 p-4">
-          {params.search && (
-            <>
-              <p>
-                Searching for{" "}
-                <span className="font-bold">&quot;{params.search}&quot;</span>
-              </p>
-              <button
-                className="bg-gray-300 px-4"
-                type="button"
-                onClick={() => {
-                  setQueryParams({ search: "", page: "1" });
-                }}
-              >
-                Clear Search
-              </button>
-            </>
-          )}
-        </div>
-        <div className="bg-gray-200 p-4">
-          <p>There are no pets with this parameters.</p>
-        </div>
-      </div>
-    );
-
   return (
     <div className="flex flex-col gap-4">
       <Sort
         currentPage={dataFetched.pagination.currentPage}
         pageSize={dataFetched.pagination.pageSize}
         totalCount={dataFetched.pagination.totalCount}
+        isLoading={isLoading}
       />
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 bg-gray-200 p-4">
-        {dataFetched.data.map((pet) => (
-          <div
-            className="flex flex-col items-center justify-center bg-gray-300 p-4"
-            key={pet.id}
-          >
-            <div className="aspect-square w-32 bg-gray-400" />
-            <p>{pet.name}</p>
-            <p>{pet.species}</p>
-            <p>{pet.sex}</p>
-            <p>{pet.size}</p>
-            <p>{formatDate(pet.birthdate)}</p>
-            <p>{getAge(pet.birthdate)}</p>
-            {params.postalCode && params.lat && params.lon && (
+      {isLoading ? (
+        <LoadingPets />
+      ) : dataFetched.data.length === 0 ? (
+        <div className="bg-gray-200 p-4">
+          <p>There are no pets with this parameters.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 bg-gray-200 p-4">
+          {dataFetched.data.map((pet) => (
+            <Link
+              href={`/pet/${pet.id}`}
+              className="flex flex-col items-center justify-center bg-gray-300 p-4"
+              key={pet.id}
+            >
+              <img
+                src={pet.image}
+                alt={pet.name}
+                className="aspect-square w-full object-cover"
+              />
+              <p className="text-2xl">{pet.name}</p>
               <p>
-                {Math.round(
-                  haversineFormula(
-                    +params.lat,
-                    +params.lon,
-                    +pet.lat,
-                    +pet.lon,
-                  ),
-                )}{" "}
-                Km from you
+                {capitalizeFirstLetter(pet.sex)},{" "}
+                {capitalizeFirstLetter(pet.size)}
               </p>
-            )}
-          </div>
-        ))}
-      </div>
-      <Pagination
-        currentPage={dataFetched.pagination.currentPage}
-        totalPages={dataFetched.pagination.totalPages}
-      />
+              <p>{getAge(pet.birthdate)}</p>
+              {params.postalCode && params.lat && params.lon && (
+                <p>
+                  {Math.floor(
+                    haversineFormula(
+                      +params.lat,
+                      +params.lon,
+                      +pet.lat,
+                      +pet.lon,
+                    ),
+                  )}{" "}
+                  Km from you
+                </p>
+              )}
+            </Link>
+          ))}
+        </div>
+      )}
+      {!isLoading && (
+        <Pagination
+          currentPage={dataFetched.pagination.currentPage}
+          totalPages={dataFetched.pagination.totalPages}
+        />
+      )}
     </div>
   );
 }

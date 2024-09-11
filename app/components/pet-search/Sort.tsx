@@ -4,9 +4,15 @@ type Props = {
   currentPage: number;
   pageSize: number;
   totalCount: number;
+  isLoading: boolean;
 };
 
-export default function Sort({ currentPage, pageSize, totalCount }: Props) {
+export default function Sort({
+  currentPage,
+  pageSize,
+  totalCount,
+  isLoading,
+}: Props) {
   const { queryParams, setQueryParams } = useQueryParams();
 
   const startingValue = (currentPage - 1) * pageSize + 1;
@@ -17,35 +23,37 @@ export default function Sort({ currentPage, pageSize, totalCount }: Props) {
   return (
     <div className="flex items-center justify-between gap-2 bg-gray-200 p-4">
       <div className="pr-8">
-        <p>
-          Showing {startingValue} - {endingValue} of {totalCount} pets{" "}
-          {queryParams.get("search") && (
-            <>
-              <span className="mr-2">
-                for{" "}
-                <span className="font-bold">
-                  &quot;{queryParams.get("search")}&quot;
+        {!isLoading && (
+          <p>
+            Showing {startingValue} - {endingValue} of {totalCount} pets{" "}
+            {queryParams.search && (
+              <>
+                <span className="mr-2">
+                  for{" "}
+                  <span className="font-bold">
+                    &quot;{queryParams.search}&quot;
+                  </span>
                 </span>
-              </span>
-              <button
-                className="bg-gray-300 px-4"
-                type="button"
-                onClick={() => {
-                  setQueryParams({ search: "", page: "1" });
-                }}
-              >
-                Clear Search
-              </button>
-            </>
-          )}
-        </p>
+                <button
+                  className="bg-gray-300 px-4"
+                  type="button"
+                  onClick={() => {
+                    setQueryParams({ search: "", page: "1" });
+                  }}
+                >
+                  Clear Search
+                </button>
+              </>
+            )}
+          </p>
+        )}
       </div>
       <div>
         <label htmlFor="sort">Sort by: </label>
         <select
           name="sort"
           id="sort"
-          defaultValue={queryParams.get("sort")?.toString()}
+          defaultValue={queryParams.sort?.toString()}
           onChange={(e) => {
             setQueryParams({ sort: e.target.value, page: "1" });
           }}
@@ -53,10 +61,12 @@ export default function Sort({ currentPage, pageSize, totalCount }: Props) {
           <option value="">-</option>
           <option value="youngest">Youngest</option>
           <option value="oldest">Oldest</option>
-          {queryParams.get("postalCode") &&
-            queryParams.get("lat") &&
-            queryParams.get("lon") &&
-            queryParams.get("distance") && (
+          <option value="newest-addition">Newest Addition</option>
+          <option value="oldest-addition">Oldest Addition</option>
+          {queryParams.postalCode &&
+            queryParams.lat &&
+            queryParams.lon &&
+            queryParams.distance && (
               <>
                 <option value="nearest">Nearest</option>
                 <option value="farthest">Farthest</option>

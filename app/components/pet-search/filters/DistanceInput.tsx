@@ -1,8 +1,8 @@
-import { ReadonlyURLSearchParams } from "next/navigation";
+import { QueryParams } from "@/app/types/types";
 import { useState } from "react";
 
 type Props = {
-  queryParams: ReadonlyURLSearchParams;
+  queryParams: QueryParams;
   setQueryParams: (newParams: Record<string, string>) => void;
 };
 
@@ -13,11 +13,12 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
 
   const handleSubmitPostalCode = async () => {
     setLoading(true);
+    //Get data from Postal Code
     const response = await fetch(
       `https://nominatim.openstreetmap.org/search?postalcode=${postalCode}&format=json&country=mexico`,
     );
     const data = await response.json();
-    if (data.length === 0) setError("*Invalid Postal Code");
+    if (data.length === 0 || !postalCode) setError("*Invalid Postal Code");
     else
       setQueryParams({
         postalCode,
@@ -29,7 +30,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
     setLoading(false);
   };
 
-  if (!queryParams.get("postalCode"))
+  if (!queryParams.postalCode)
     return (
       <div className="flex flex-col gap-1">
         {error && <p className="text-xs">{error}</p>}
@@ -54,7 +55,6 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
               }
             }}
           />
-
           <button
             type="button"
             disabled={loading}
@@ -68,21 +68,28 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
     );
 
   return (
-    <div className="flex flex-col gap-2">
+    <>
       <div className="flex flex-col gap-1">
         <p>Postal Code</p>
         <div className="flex gap-2">
-          <p>{queryParams.get("postalCode")}</p>
+          <p>{queryParams.postalCode}</p>
           <button
             className="bg-gray-300 px-4"
             type="button"
             onClick={() => {
+              // Check if sort is distance related and if so, reset it
+              const sort =
+                queryParams.sort === "nearest" ||
+                queryParams.sort === "farthest"
+                  ? ""
+                  : queryParams.sort?.toString() || "";
+              setPostalCode("");
               setQueryParams({
                 postalCode: "",
                 lat: "",
                 lon: "",
                 distance: "",
-                sort: "",
+                sort,
                 page: "1",
               });
             }}
@@ -96,7 +103,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
         <select
           name="distance"
           id="distance"
-          defaultValue={queryParams.get("distance")?.toString()}
+          defaultValue={queryParams.distance?.toString()}
           onChange={(e) => {
             setQueryParams({ distance: e.target.value, page: "1" });
           }}
@@ -108,6 +115,6 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
           <option value="20038">Any distance</option>
         </select>
       </div>
-    </div>
+    </>
   );
 }

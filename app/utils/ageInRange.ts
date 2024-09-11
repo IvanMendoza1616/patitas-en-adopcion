@@ -11,7 +11,7 @@ export function ageInRange(ageArray: string[], birthdate: string): boolean {
   const today = new Date();
 
   const differenceInTime = +today - +petBirthdate;
-  const ageInDays = Math.round(differenceInTime / (1000 * 60 * 60 * 24));
+  const ageInDays = Math.floor(differenceInTime / (1000 * 60 * 60 * 24));
 
   let result = false;
 

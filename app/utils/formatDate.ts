@@ -29,9 +29,24 @@ export function getAge(birthdate: string) {
   const yearsString =
     years === 0
       ? ""
-      : `${years} ${years === 1 ? "año" : "años"}${months === 0 ? "" : ", "}`;
+      : `${years} ${years === 1 ? "year" : "years"}${months === 0 ? "" : ", "}`;
 
   const monthsString =
-    months === 0 ? "" : `${months} ${months === 1 ? "mes" : "meses"}`;
+    months === 0 ? "" : `${months} ${months === 1 ? "month" : "months"}`;
   return `${yearsString}${monthsString}`;
+}
+
+export function getTimeAgo(time: number) {
+  const currentTimestamp = new Date().getTime();
+  const timeAgo = currentTimestamp - time;
+
+  const daysAgo = Math.floor(timeAgo / (1000 * 3600 * 24));
+  const monthsAgo = Math.floor(timeAgo / (1000 * 3600 * 24 * 30));
+  const yearsAgo = Math.floor(timeAgo / (1000 * 3600 * 24 * 30 * 12));
+
+  if (daysAgo === 0) return "today";
+  if (daysAgo < 31) return `${daysAgo} ${daysAgo === 1 ? "day" : "days"} ago`;
+  if (monthsAgo < 12)
+    return `${monthsAgo} ${monthsAgo === 1 ? "month" : "months"} ago`;
+  return `${yearsAgo} ${yearsAgo === 1 ? "year" : "years"} ago`;
 }

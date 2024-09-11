@@ -1,4 +1,4 @@
-import { ReadonlyURLSearchParams } from "next/navigation";
+import { QueryParamsKeys } from "@/app/types/types";
 
 type inputValues = {
   value: string;
@@ -6,14 +6,14 @@ type inputValues = {
 };
 
 type Props = {
-  queryParams: ReadonlyURLSearchParams;
+  defaultValue: string | null;
   legend: string;
-  fieldsetName: string;
+  fieldsetName: QueryParamsKeys;
   inputs: inputValues[];
 };
 
 export default function Fieldset({
-  queryParams,
+  defaultValue,
   legend,
   fieldsetName,
   inputs,
@@ -25,10 +25,7 @@ export default function Fieldset({
         name={fieldsetName}
         id={input.value}
         value={input.value}
-        defaultChecked={queryParams
-          .get(fieldsetName)
-          ?.split(",")
-          .includes(input.value)}
+        defaultChecked={defaultValue?.split(",").includes(input.value)}
       />
       <label htmlFor={input.value}>{input.label}</label>
     </div>

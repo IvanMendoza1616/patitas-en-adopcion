@@ -58,7 +58,7 @@ function createPetsArray(numberOfPets) {
   const owners = ["ivan", "laura", "maria", "carlos", "sofia"];
   const species = ["dog", "cat"];
   const sexes = ["male", "female"];
-  const sizes = ["small", "medium", "large", "xlarge"];
+  const sizes = ["small", "medium", "large", "x-large"];
   const cities = ["Queretaro", "Acapulco", "Tampico"];
 
   const pets = [];

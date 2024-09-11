@@ -9,19 +9,21 @@ type Props = {
 export default function Pagination({ currentPage, totalPages }: Props) {
   const { setQueryParams } = useQueryParams();
 
-  const pagesGenerated = 1;
+  const pagesGeneratedAround = 1;
 
-  const calcStart =
+  //Get start and stop without considering min and max pages possible
+  const tempStart =
     currentPage === totalPages
-      ? currentPage - pagesGenerated - 1
-      : currentPage - pagesGenerated;
-  const calcStop =
+      ? currentPage - pagesGeneratedAround - 1
+      : currentPage - pagesGeneratedAround;
+  const tempStop =
     currentPage === 1
-      ? currentPage + pagesGenerated + 1
-      : currentPage + pagesGenerated;
+      ? currentPage + pagesGeneratedAround + 1
+      : currentPage + pagesGeneratedAround;
 
-  const start = calcStart < 1 ? 1 : calcStart;
-  const stop = calcStop + 1 > totalPages + 1 ? totalPages + 1 : calcStop + 1;
+  //Delimit start and stop
+  const start = tempStart < 1 ? 1 : tempStart;
+  const stop = tempStop > totalPages ? totalPages : tempStop;
 
   return (
     <div className="flex items-center justify-center gap-2 bg-gray-200 p-4">
@@ -34,7 +36,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
       >
         <ChevronLeftIcon className="w-5" />
       </button>
-      {calcStart > 1 && (
+      {start > 1 && (
         <>
           <button
             className={`flex aspect-square w-[30px] items-center justify-center ${currentPage === 1 ? "bg-gray-100" : "bg-gray-300"}`}
@@ -44,14 +46,14 @@ export default function Pagination({ currentPage, totalPages }: Props) {
           >
             1
           </button>
-          {calcStart > 2 && (
+          {start > 2 && (
             <p className="flex aspect-square w-[10px] items-center justify-center">
               ...
             </p>
           )}
         </>
       )}
-      {Array.from({ length: stop - start }, (_, index) => (
+      {Array.from({ length: stop - start + 1 }, (_, index) => (
         <button
           disabled={start + index === currentPage}
           className={`aspect-square w-[30px] items-center justify-center md:flex ${start + index === currentPage ? "bg-gray-100" : "bg-gray-300"}`}
@@ -63,9 +65,9 @@ export default function Pagination({ currentPage, totalPages }: Props) {
           {start + index}
         </button>
       ))}
-      {calcStop < totalPages && (
+      {stop < totalPages && (
         <>
-          {calcStop < totalPages - 1 && (
+          {stop < totalPages - 1 && (
             <p className="flex aspect-square w-[10px] items-center justify-center">
               ...
             </p>

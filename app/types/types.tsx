@@ -1,26 +1,33 @@
-export type SearchParams = {
-  search?: string;
-  species?: string;
-  postalCode?: string;
-  lat?: string;
-  lon?: string;
-  distance?: string;
-  age?: string;
-  sex?: string;
-  size?: string;
-  sort?: string;
-  page?: string;
-};
+export const params = [
+  "search",
+  "species",
+  "postalCode",
+  "lat",
+  "lon",
+  "distance",
+  "age",
+  "sex",
+  "size",
+  "sort",
+  "page",
+] as const;
+
+export type QueryParamsKeys = (typeof params)[number];
+
+export type QueryParams = Record<QueryParamsKeys, string | null>;
 
 export type Pet = {
   id: number;
   name: string;
   image: string;
+  description: string;
   birthdate: string;
   ownerId: string;
   species: string;
   sex: string;
   size: string;
-  lat: string;
-  lon: string;
+  lat: number;
+  lon: number;
+  createdAt: number;
+  updatedAt: number;
 };

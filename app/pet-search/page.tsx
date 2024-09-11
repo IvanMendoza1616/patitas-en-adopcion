@@ -1,11 +1,11 @@
 import Filters from "../components/pet-search/filters/Filters";
 import PetsGrid from "../components/pet-search/pets/PetsGrid";
-import { SearchParams } from "../types/types";
+import { QueryParams } from "../types/types";
 
 export default function PetSearch({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: QueryParams;
 }) {
   const params = searchParams;
 

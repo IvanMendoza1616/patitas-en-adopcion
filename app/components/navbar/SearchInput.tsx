@@ -5,13 +5,13 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 export default function SearchInput() {
   const { queryParams, setQueryParams } = useQueryParams();
   const [search, setSearch] = useState(
-    queryParams.get("search")?.toString() || "",
+    queryParams.search?.toString() || "test",
   );
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setSearch(queryParams.get("search")?.toString() || "");
-  }, [queryParams]);
+    setSearch(queryParams.search?.toString() || "");
+  }, [queryParams.search]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ export default function SearchInput() {
 
   return (
     <form
-      className="col-span-2 flex items-center justify-center gap-2 md:col-span-1"
+      className="col-span-2 mx-auto flex max-w-[300px] items-center justify-center gap-2 md:col-span-1"
       onSubmit={handleSubmit}
     >
       <label htmlFor="search">Search:</label>
