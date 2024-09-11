@@ -131,7 +131,7 @@ export default function PetsGrid({ params }: Props) {
       {isLoading ? (
         <LoadingPets />
       ) : dataFetched.data.length === 0 ? (
-        <div className="bg-gray-200 p-4">
+        <div className="flex h-[300px] items-center justify-center bg-gray-200 p-4">
           <p>There are no pets with this parameters.</p>
         </div>
       ) : (
@@ -170,7 +170,7 @@ export default function PetsGrid({ params }: Props) {
           ))}
         </div>
       )}
-      {!isLoading && (
+      {!isLoading && dataFetched.data.length > 0 && (
         <Pagination
           currentPage={dataFetched.pagination.currentPage}
           totalPages={dataFetched.pagination.totalPages}

@@ -4,9 +4,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 
 export default function SearchInput() {
   const { queryParams, setQueryParams } = useQueryParams();
-  const [search, setSearch] = useState(
-    queryParams.search?.toString() || "test",
-  );
+  const [search, setSearch] = useState(queryParams.search?.toString() || "");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

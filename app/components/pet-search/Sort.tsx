@@ -25,7 +25,10 @@ export default function Sort({
       <div className="pr-8">
         {!isLoading && (
           <p>
-            Showing {startingValue} - {endingValue} of {totalCount} pets{" "}
+            {totalCount === 0
+              ? "No results "
+              : `Showing ${startingValue} - ${endingValue} of ${totalCount} pets `}
+
             {queryParams.search && (
               <>
                 <span className="mr-2">
