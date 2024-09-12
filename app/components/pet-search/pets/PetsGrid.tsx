@@ -67,6 +67,9 @@ export default function PetsGrid({ params }: Props) {
         const birthdateA = +new Date(petA.birthdate);
         const birthdateB = +new Date(petB.birthdate);
 
+        const createdA = petA.createdAt;
+        const createdB = petB.createdAt;
+
         const updatedA = petA.updatedAt;
         const updatedB = petB.updatedAt;
 
@@ -84,9 +87,9 @@ export default function PetsGrid({ params }: Props) {
         if (params.sort === "youngest") return birthdateB - birthdateA;
         if (params.sort === "oldest") return birthdateA - birthdateB;
         if (params.sort === "nearest") return distanceA - distanceB;
-        if (params.sort === "newest-addition") return updatedB - updatedA;
-        if (params.sort === "oldest-addition") return updatedA - updatedB;
-        return 0;
+        if (params.sort === "newest-addition") return createdB - createdA;
+        if (params.sort === "oldest-addition") return createdA - createdB;
+        return updatedB - updatedA;
       });
 
       //Pagination
