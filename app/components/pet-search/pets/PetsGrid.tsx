@@ -1,18 +1,17 @@
 "use client";
 import { Pet, QueryParams } from "@/app/types/types";
-import { petData } from "@/petData";
 import { useEffect, useState } from "react";
 import LoadingPets from "./LoadingPets";
 import { haversineFormula } from "@/app/utils/haversineFormula";
 import Pagination from "./Pagination";
 import Sort from "../Sort";
 import { getAge } from "@/app/utils/formatDate";
-import { ageInRange } from "@/app/utils/ageInRange";
 import Link from "next/link";
 import { capitalizeFirstLetter } from "@/app/utils/textFormat";
 //import Image from "next/image";
 
 type DataFetchedType = {
+  success: boolean;
   data: Pet[];
   pagination: {
     currentPage: number;
@@ -29,6 +28,7 @@ type Props = {
 export default function PetsGrid({ params }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState<DataFetchedType>({
+    success: false,
     data: [],
     pagination: {
       currentPage: 0,
@@ -38,10 +38,31 @@ export default function PetsGrid({ params }: Props) {
     },
   });
 
-  //Emulate an API call each time params are updated
   useEffect(() => {
     const getPets = async () => {
       setIsLoading(true);
+      const queryString = new URLSearchParams(
+        params as Record<string, string>,
+      ).toString();
+
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await fetch(
+        `/api/get-pets?${queryString}`,
+        requestOptions,
+      );
+      const data = await response.json();
+
+      setDataFetched(data);
+      setIsLoading(false);
+
+      //Emulate an API call each time params are updated
+      /*
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       //Filtering
@@ -116,12 +137,18 @@ export default function PetsGrid({ params }: Props) {
           totalPages,
         },
       };
-
-      setDataFetched(result);
-      setIsLoading(false);
+      */
     };
     getPets();
   }, [params]);
+
+  if (!dataFetched.success && !isLoading) {
+    return (
+      <div className="flex h-[300px] items-center justify-center bg-gray-200 p-4">
+        There was an error with the page.
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -141,12 +168,12 @@ export default function PetsGrid({ params }: Props) {
         <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 bg-gray-200 p-4">
           {dataFetched.data.map((pet) => (
             <Link
-              href={`/pet/${pet.id}`}
+              href={`/pet/${pet._id}`}
               className="flex flex-col items-center justify-center bg-gray-300 p-4"
-              key={pet.id}
+              key={pet._id}
             >
               <img
-                src={pet.image}
+                src={pet.imageUrl}
                 alt={pet.name}
                 className="aspect-square w-full object-cover"
               />
@@ -162,8 +189,8 @@ export default function PetsGrid({ params }: Props) {
                     haversineFormula(
                       +params.lat,
                       +params.lon,
-                      +pet.lat,
-                      +pet.lon,
+                      pet.location.coordinates[1],
+                      pet.location.coordinates[0],
                     ),
                   )}{" "}
                   Km from you

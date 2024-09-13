@@ -11,15 +11,12 @@ export function formatDate(value: string) {
   return formattedDate;
 }
 
-export function getAge(birthdate: string) {
+export function getAge(birthdate: Date) {
   if (!birthdate) return "";
-  const petBirthdate = birthdate.split("-");
-  const petDate = new Date(
-    +petBirthdate[0],
-    +petBirthdate[1] - 1,
-    +petBirthdate[2],
-  );
+
+  const petDate = new Date(birthdate);
   const currentDate = new Date();
+
   const petAgeTimestamp = currentDate.valueOf() - petDate.valueOf();
   const years = Math.floor(petAgeTimestamp / (1000 * 3600 * 24 * 30 * 12));
   const months = Math.floor(

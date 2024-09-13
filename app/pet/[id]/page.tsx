@@ -1,10 +1,14 @@
+import client from "@/app/lib/db";
 import { getAge, getTimeAgo } from "@/app/utils/formatDate";
 import { capitalizeFirstLetter } from "@/app/utils/textFormat";
-import { petData } from "@/petData";
+import { ObjectId } from "mongodb";
 
-export default function Pet({ params }: { params: { id: string } }) {
-  //Emulate API call to get data of pet
-  const pet = petData.find((pet) => pet.id === +params.id);
+export default async function Pet({ params }: { params: { id: string } }) {
+  const [pet] = await client
+    .db("petsAdoption")
+    .collection("pets")
+    .find({ _id: new ObjectId(params.id) })
+    .toArray();
 
   if (!pet)
     return (
@@ -19,7 +23,7 @@ export default function Pet({ params }: { params: { id: string } }) {
         <div className="flex w-full flex-col gap-4">
           <h1 className="text-3xl">My name is {pet.name}</h1>
           <img
-            src={pet.image}
+            src={pet.imageUrl}
             alt={pet.name}
             className="aspect-square w-full object-cover"
           />

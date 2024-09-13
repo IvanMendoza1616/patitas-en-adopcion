@@ -15,8 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Patitas en Adopción",
-  description: "Adopta una mascota",
+  title: "Pet Adoption",
+  description: "Adopt a pet",
 };
 
 export default function RootLayout({

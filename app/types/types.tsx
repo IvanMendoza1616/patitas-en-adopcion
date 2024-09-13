@@ -17,17 +17,19 @@ export type QueryParamsKeys = (typeof params)[number];
 export type QueryParams = Record<QueryParamsKeys, string | null>;
 
 export type Pet = {
-  id: number;
+  _id: number;
   name: string;
-  image: string;
+  imageUrl: string;
   description: string;
-  birthdate: string;
+  birthdate: Date;
   ownerId: string;
   species: string;
   sex: string;
   size: string;
-  lat: number;
-  lon: number;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: Date;
+  updatedAt: Date;
+  location: {
+    type: "Point";
+    coordinates: [number, number];
+  };
 };
