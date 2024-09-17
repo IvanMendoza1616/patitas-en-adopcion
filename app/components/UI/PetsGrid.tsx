@@ -1,42 +1,32 @@
 "use client";
-import { Pet, QueryParams } from "@/app/types/types";
+import { DataFetchedType, QueryParams } from "@/app/types/types";
 import { useEffect, useState } from "react";
 import LoadingPets from "./LoadingPets";
-import { haversineFormula } from "@/app/utils/haversineFormula";
 import Pagination from "./Pagination";
-import Sort from "../Sort";
-import { getAge } from "@/app/utils/formatDate";
-import Link from "next/link";
-import { capitalizeFirstLetter } from "@/app/utils/textFormat";
-//import Image from "next/image";
-
-type DataFetchedType = {
-  success: boolean;
-  data: Pet[];
-  pagination: {
-    currentPage: number;
-    pageSize: number;
-    totalCount: number;
-    totalPages: number;
-  };
-};
+import Sort from "../pet-search/Sort";
+import axios from "axios";
+import ShelterPetCard from "../account/pets/ShelterPetCard";
+import PetCard from "../pet-search/pets/PetCard";
 
 type Props = {
   params: QueryParams;
+  shelter?: boolean;
 };
 
-export default function PetsGrid({ params }: Props) {
+const initialResponse = {
+  success: false,
+  data: [],
+  pagination: {
+    currentPage: 0,
+    pageSize: 0,
+    totalCount: 0,
+    totalPages: 0,
+  },
+};
+export default function PetsGrid({ params, shelter }: Props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [dataFetched, setDataFetched] = useState<DataFetchedType>({
-    success: false,
-    data: [],
-    pagination: {
-      currentPage: 0,
-      pageSize: 0,
-      totalCount: 0,
-      totalPages: 0,
-    },
-  });
+  const [dataFetched, setDataFetched] =
+    useState<DataFetchedType>(initialResponse);
 
   useEffect(() => {
     const getPets = async () => {
@@ -44,21 +34,13 @@ export default function PetsGrid({ params }: Props) {
       const queryString = new URLSearchParams(
         params as Record<string, string>,
       ).toString();
-
-      const requestOptions = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const response = await fetch(
-        `/api/get-pets?${queryString}`,
-        requestOptions,
-      );
-      const data = await response.json();
-
-      setDataFetched(data);
+      try {
+        const url = shelter ? "get-shelter-pets" : "get-pets";
+        const response = await axios.get(`/api/${url}?${queryString}`);
+        setDataFetched(response.data);
+      } catch (error) {
+        setDataFetched(initialResponse);
+      }
       setIsLoading(false);
 
       //Emulate an API call each time params are updated
@@ -140,7 +122,7 @@ export default function PetsGrid({ params }: Props) {
       */
     };
     getPets();
-  }, [params]);
+  }, [params, shelter]);
 
   if (!dataFetched.success && !isLoading) {
     return (
@@ -150,14 +132,30 @@ export default function PetsGrid({ params }: Props) {
     );
   }
 
+  const pets = shelter
+    ? dataFetched.data.map((pet) => (
+        <ShelterPetCard key={pet._id.toString()} pet={pet} />
+      ))
+    : dataFetched.data.map((pet) => (
+        <PetCard
+          key={pet._id.toString()}
+          pet={pet}
+          userLat={params.lat}
+          userLon={params.lon}
+        />
+      ));
+
   return (
     <div className="flex flex-col gap-4">
-      <Sort
-        currentPage={dataFetched.pagination.currentPage}
-        pageSize={dataFetched.pagination.pageSize}
-        totalCount={dataFetched.pagination.totalCount}
-        isLoading={isLoading}
-      />
+      {!shelter && (
+        <Sort
+          currentPage={dataFetched.pagination.currentPage}
+          pageSize={dataFetched.pagination.pageSize}
+          totalCount={dataFetched.pagination.totalCount}
+          isLoading={isLoading}
+        />
+      )}
+
       {isLoading ? (
         <LoadingPets />
       ) : dataFetched.data.length === 0 ? (
@@ -166,38 +164,7 @@ export default function PetsGrid({ params }: Props) {
         </div>
       ) : (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 bg-gray-200 p-4">
-          {dataFetched.data.map((pet) => (
-            <Link
-              href={`/pet/${pet._id}`}
-              className="flex flex-col items-center justify-center bg-gray-300 p-4"
-              key={pet._id}
-            >
-              <img
-                src={pet.imageUrl}
-                alt={pet.name}
-                className="aspect-square w-full object-cover"
-              />
-              <p className="text-2xl">{pet.name}</p>
-              <p>
-                {capitalizeFirstLetter(pet.sex)},{" "}
-                {capitalizeFirstLetter(pet.size)}
-              </p>
-              <p>{getAge(pet.birthdate)}</p>
-              {params.postalCode && params.lat && params.lon && (
-                <p>
-                  {Math.floor(
-                    haversineFormula(
-                      +params.lat,
-                      +params.lon,
-                      pet.location.coordinates[1],
-                      pet.location.coordinates[0],
-                    ),
-                  )}{" "}
-                  Km from you
-                </p>
-              )}
-            </Link>
-          ))}
+          {pets}
         </div>
       )}
       {!isLoading && dataFetched.data.length > 0 && (

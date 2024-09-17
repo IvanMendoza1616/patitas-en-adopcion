@@ -1,3 +1,4 @@
+"use client";
 import { useQueryParams } from "@/app/hooks/useQueryParams";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 

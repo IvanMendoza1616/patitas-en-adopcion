@@ -1,9 +1,10 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { params, QueryParams } from "../types/types";
 
 export function useQueryParams() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const path = usePathname();
 
   //Create an object from the params array as keys and assign the value from searchParams
   const queryParams: QueryParams = Object.assign(
@@ -30,7 +31,8 @@ export function useQueryParams() {
     });
 
     // Push the new query parameters to the URL
-    router.replace(`/pet-search?${query.toString()}`);
+    //Using replace instead of push because when going back to old route, filters are not reset
+    router.replace(`${path}?${query.toString()}`);
   };
 
   return { queryParams, setQueryParams };

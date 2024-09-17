@@ -10,6 +10,8 @@ export const params = [
   "size",
   "sort",
   "page",
+  "searchName",
+  "adopted",
 ] as const;
 
 export type QueryParamsKeys = (typeof params)[number];
@@ -31,5 +33,25 @@ export type Pet = {
   location: {
     type: "Point";
     coordinates: [number, number];
+  };
+};
+
+export type Shelter = {
+  name: string;
+  description: string;
+  phone: string;
+  email: string;
+  facebook: string;
+  instagram: string;
+};
+
+export type DataFetchedType = {
+  success: boolean;
+  data: Pet[];
+  pagination: {
+    currentPage: number;
+    pageSize: number;
+    totalCount: number;
+    totalPages: number;
   };
 };

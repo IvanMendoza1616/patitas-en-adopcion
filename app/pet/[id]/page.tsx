@@ -2,8 +2,9 @@ import client from "@/app/lib/db";
 import { getAge, getTimeAgo } from "@/app/utils/formatDate";
 import { capitalizeFirstLetter } from "@/app/utils/textFormat";
 import { ObjectId } from "mongodb";
+import Link from "next/link";
 
-export default async function Pet({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   const [pet] = await client
     .db("petsAdoption")
     .collection("pets")
@@ -16,6 +17,12 @@ export default async function Pet({ params }: { params: { id: string } }) {
         <p>Pet not found</p>
       </main>
     );
+
+  const [shelter] = await client
+    .db("petsAdoption")
+    .collection("shelters")
+    .find({ ownerId: pet.ownerId })
+    .toArray();
 
   return (
     <main className="m-auto w-full max-w-[1200px] bg-gray-100 p-4">
@@ -41,9 +48,22 @@ export default async function Pet({ params }: { params: { id: string } }) {
             <p>Sex:</p>
             <p>{capitalizeFirstLetter(pet.sex)}</p>
             <p>Size:</p>
-            <p>{capitalizeFirstLetter(pet.size)}</p>
-            <p>Cared by:</p>
-            <p>{capitalizeFirstLetter(pet.ownerId)}</p>
+            <p>
+              {capitalizeFirstLetter(
+                pet.size === "x-large" ? "X-Large" : pet.size,
+              )}
+            </p>
+            {shelter && (
+              <>
+                <p>Cared by:</p>
+                <Link
+                  className="text-blue-500"
+                  href={`/shelter/${shelter._id}`}
+                >
+                  {shelter.name}
+                </Link>
+              </>
+            )}
           </div>
           <div>
             <h2 className="mb-2 text-xl">About Me</h2>

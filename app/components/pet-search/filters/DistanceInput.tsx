@@ -1,4 +1,5 @@
 import { QueryParams } from "@/app/types/types";
+import axios from "axios";
 import { useState } from "react";
 
 type Props = {
@@ -14,10 +15,10 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
   const handleSubmitPostalCode = async () => {
     setLoading(true);
     //Get data from Postal Code
-    const response = await fetch(
+    const response = await axios.get(
       `https://nominatim.openstreetmap.org/search?postalcode=${postalCode}&format=json&country=mexico`,
     );
-    const data = await response.json();
+    const data = response.data;
     if (data.length === 0 || !postalCode) setError("*Invalid Postal Code");
     else
       setQueryParams({
