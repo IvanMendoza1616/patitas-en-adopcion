@@ -20,6 +20,12 @@ const nextConfig = {
         port: "",
         pathname: "/u/**",
       },
+      {
+        protocol: "https",
+        hostname: "petadoptionbucket.s3.us-east-2.amazonaws.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

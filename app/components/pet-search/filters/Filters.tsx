@@ -2,19 +2,30 @@
 import { useQueryParams } from "@/app/hooks/useQueryParams";
 import Fieldset from "./Fieldset";
 import { FormEvent, useState } from "react";
-import DistanceInput from "./DistanceInput";
-//import { QueryParams } from "@/app/types/types";
 import FilterTag from "./FilterTag";
+import dynamic from "next/dynamic";
+import { useMemo } from "react";
 
 type FormDataObject = {
   [key: string]: FormDataEntryValue | FormDataEntryValue[];
 };
 
 export default function Filters() {
+  //Imported component as CSR
+  //Example from https://andresprieto-25116.medium.com/how-to-use-react-leaflet-in-nextjs-with-typescript-surviving-it-21a3379d4d18
+  const DistanceInput = useMemo(
+    () =>
+      dynamic(() => import("./DistanceInput"), {
+        loading: () => <p>Postal Code</p>,
+        ssr: false,
+      }),
+    [],
+  );
+
   const { queryParams, setQueryParams } = useQueryParams();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleFormChange = (e: FormEvent<HTMLFormElement>) => {
+  const handleFormChange = async (e: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.currentTarget);
 
     //Get array of values for checkboxes

@@ -19,7 +19,7 @@ export type QueryParamsKeys = (typeof params)[number];
 export type QueryParams = Record<QueryParamsKeys, string | null>;
 
 export type Pet = {
-  _id: number;
+  _id: string;
   name: string;
   imageUrl: string;
   description: string;
@@ -34,15 +34,24 @@ export type Pet = {
     type: "Point";
     coordinates: [number, number];
   };
+  adopted: boolean;
 };
 
 export type Shelter = {
+  _id: string;
+  ownerId: string;
   name: string;
+  imageUrl: string;
   description: string;
   phone: string;
   email: string;
   facebook: string;
   instagram: string;
+  address: string;
+  location: {
+    type: "Point";
+    coordinates: [number, number];
+  };
 };
 
 export type DataFetchedType = {

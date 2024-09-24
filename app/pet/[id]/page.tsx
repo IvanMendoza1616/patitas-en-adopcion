@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb";
 import Link from "next/link";
 
 export default async function Page({ params }: { params: { id: string } }) {
+  //Workaround while models are created
   const [pet] = await client
     .db("petsAdoption")
     .collection("pets")
@@ -39,8 +40,9 @@ export default async function Page({ params }: { params: { id: string } }) {
             {getTimeAgo(pet.updatedAt)}
           </p>
         </div>
+        {pet.adopted && <div className="w-full">This pet has been adopted</div>}
 
-        <div className="flex flex-col gap-4">
+        <div className="flex w-full flex-col gap-4">
           <div className="grid w-full grid-cols-[auto,1fr] gap-x-10">
             <h2 className="col-span-2 mb-2 text-xl">My Basic Info</h2>
             <p>Age:</p>
@@ -62,6 +64,8 @@ export default async function Page({ params }: { params: { id: string } }) {
                 >
                   {shelter.name}
                 </Link>
+                <p>Sheter Address:</p>
+                <p>{shelter.address}</p>
               </>
             )}
           </div>
@@ -69,6 +73,8 @@ export default async function Page({ params }: { params: { id: string } }) {
             <h2 className="mb-2 text-xl">About Me</h2>
             <p className="">{pet.description}</p>
           </div>
+
+          <Link href={`/adopt-pet/${params.id}`}>Adopt me</Link>
         </div>
       </div>
     </main>

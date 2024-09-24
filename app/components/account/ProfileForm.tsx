@@ -14,7 +14,10 @@ type Props = {
 };
 
 export default function ProfileForm({ sessionUser }: Props) {
-  const [state, formAction] = useFormState(updateUser, { message: "" });
+  const [state, formAction] = useFormState(updateUser, {
+    success: false,
+    message: "",
+  });
 
   return (
     <div className="bg-gray-300 p-4">
@@ -37,7 +40,7 @@ export default function ProfileForm({ sessionUser }: Props) {
         </div>
         <div className="mt-12 flex items-center gap-4">
           <SubmitButton>Update</SubmitButton>
-          <FormMessage message={state.message} />
+          <FormMessage message={state.message} success={state.success} />
         </div>
       </form>
     </div>

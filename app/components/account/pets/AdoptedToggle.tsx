@@ -24,8 +24,8 @@ export default function AdoptedToggle() {
         onChange={handleChange}
         type="checkbox"
         checked={isAdopted}
-        name="searchName"
-        id="searchName"
+        name="adopted"
+        id="adopted"
       />
     </div>
   );

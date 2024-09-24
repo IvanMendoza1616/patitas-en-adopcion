@@ -33,9 +33,9 @@ export function getAge(birthdate: Date) {
   return `${yearsString}${monthsString}`;
 }
 
-export function getTimeAgo(time: number) {
+export function getTimeAgo(time: Date) {
   const currentTimestamp = new Date().getTime();
-  const timeAgo = currentTimestamp - time;
+  const timeAgo = currentTimestamp - new Date(time).getTime();
 
   const daysAgo = Math.floor(timeAgo / (1000 * 3600 * 24));
   const monthsAgo = Math.floor(timeAgo / (1000 * 3600 * 24 * 30));

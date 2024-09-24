@@ -30,9 +30,13 @@ export function useQueryParams() {
       }
     });
 
+    //Change path if search is used, so it redirects to pet-search
+    //This was added because we have two searches, My Pets search and general search
+    const searchPath = query.get("search") ? "/pet-search" : path;
+
     // Push the new query parameters to the URL
     //Using replace instead of push because when going back to old route, filters are not reset
-    router.replace(`${path}?${query.toString()}`);
+    router.replace(`${searchPath}?${query.toString()}`);
   };
 
   return { queryParams, setQueryParams };

@@ -1,33 +1,56 @@
 import { QueryParams } from "@/app/types/types";
-import axios from "axios";
+//import axios from "axios";
 import { useState } from "react";
+import { EsriProvider } from "leaflet-geosearch";
 
 type Props = {
   queryParams: QueryParams;
   setQueryParams: (newParams: Record<string, string>) => void;
 };
 
+const provider = new EsriProvider();
+
 export default function DistanceInput({ queryParams, setQueryParams }: Props) {
   const [postalCode, setPostalCode] = useState("");
+  const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmitPostalCode = async () => {
     setLoading(true);
     //Get data from Postal Code
+    /*
     const response = await axios.get(
       `https://nominatim.openstreetmap.org/search?postalcode=${postalCode}&format=json&country=mexico`,
     );
     const data = response.data;
-    if (data.length === 0 || !postalCode) setError("*Invalid Postal Code");
-    else
+    */
+
+    const data = await provider.search({
+      query: `${postalCode}, México`,
+    });
+
+    console.log(data[0]);
+
+    /*
+    const postalCodeResult = data[0].label.split(",")[0];
+    const isValidResult =
+      !isNaN(Number(postalCodeResult)) && postalCodeResult.length === 5;
+      */
+    const isValidResult = true;
+
+    if (postalCode.length !== 5 || data.length === 0 || !isValidResult)
+      setError("*Invalid Postal Code");
+    else {
+      setAddress(data[0].label);
       setQueryParams({
         postalCode,
-        lat: data[0].lat,
-        lon: data[0].lon,
+        lat: data[0].y.toString(),
+        lon: data[0].x.toString(),
         distance: "20",
         page: "1",
       });
+    }
     setLoading(false);
   };
 
@@ -39,7 +62,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
         <label htmlFor="postalCode">Postal Code</label>
         <div className="flex gap-2">
           <input
-            type="text"
+            type="number"
             name="postalCode"
             id="postalCode"
             className="max-w-[60px] px-2"
@@ -72,10 +95,10 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
     <>
       <div className="flex flex-col gap-1">
         <p>Postal Code</p>
-        <div className="flex gap-2">
-          <p>{queryParams.postalCode}</p>
+        <div className="flex flex-col items-start gap-2">
+          <p>{address || queryParams.postalCode}</p>
           <button
-            className="bg-gray-300 px-4"
+            className="bg-gray-300 px-4 py-1"
             type="button"
             onClick={() => {
               // Check if sort is distance related and if so, reset it
