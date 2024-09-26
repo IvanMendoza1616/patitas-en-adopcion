@@ -98,7 +98,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         {!pet.adopted && (
           <Link
-            className="self-start rounded-md border px-4 py-2"
+            className="rounded-md border bg-black px-4 py-3 text-center text-white shadow-md"
             href={`/adopt-pet/${params.id}`}
           >
             Adopt {pet.name}
