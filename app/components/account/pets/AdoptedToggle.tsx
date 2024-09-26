@@ -1,6 +1,7 @@
 "use client";
 import { useQueryParams } from "@/app/hooks/useQueryParams";
 import { useEffect, useState } from "react";
+import CheckboxInput from "../../UI/inputs/CheckboxInput";
 
 export default function AdoptedToggle() {
   const { queryParams, setQueryParams } = useQueryParams();
@@ -18,15 +19,13 @@ export default function AdoptedToggle() {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <label htmlFor="adopted">Show Adopted</label>
-      <input
-        onChange={handleChange}
-        type="checkbox"
-        checked={isAdopted}
-        name="adopted"
-        id="adopted"
-      />
-    </div>
+    <CheckboxInput
+      label="Show adopted"
+      name="adopted"
+      id="adopted"
+      checked={isAdopted}
+      onChange={handleChange}
+      inverted
+    />
   );
 }

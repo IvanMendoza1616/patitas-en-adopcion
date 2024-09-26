@@ -19,11 +19,11 @@ export default function SearchInput() {
 
   return (
     <form
-      className="col-span-2 mx-auto flex max-w-[300px] items-center justify-center gap-2 md:col-span-1"
+      className="col-span-3 flex items-center justify-center gap-2 md:col-span-1"
       onSubmit={handleSubmit}
     >
-      <label htmlFor="search">Search:</label>
       <input
+        placeholder="Search pets..."
         ref={inputRef}
         value={search}
         onChange={(e) => {
@@ -32,7 +32,7 @@ export default function SearchInput() {
         type="text"
         name="search"
         id="search"
-        className="w-full border px-2 md:max-w-[200px]"
+        className="w-full rounded-md border px-3 py-2"
       />
     </form>
   );

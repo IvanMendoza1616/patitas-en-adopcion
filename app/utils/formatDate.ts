@@ -30,6 +30,8 @@ export function getAge(birthdate: Date) {
 
   const monthsString =
     months === 0 ? "" : `${months} ${months === 1 ? "month" : "months"}`;
+
+  if (`${yearsString}${monthsString}` === "") return "Less than a month";
   return `${yearsString}${monthsString}`;
 }
 

@@ -4,15 +4,17 @@ import { ChangeEvent, useRef, useState } from "react";
 
 type Props = {
   currentImage: string;
+  shelter?: boolean;
 };
 
-export default function ImageInput({ currentImage }: Props) {
+export default function ImageInput({ currentImage, shelter }: Props) {
   const [image, setImage] = useState(currentImage);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setImage(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files && e.target.files[0])
+      setImage(URL.createObjectURL(e.target.files[0]));
   };
 
   const handleClick = () => {
@@ -62,7 +64,7 @@ export default function ImageInput({ currentImage }: Props) {
   };
 
   return (
-    <div className="flex h-[400px] items-center justify-center bg-gray-300 p-5">
+    <div>
       <input
         ref={fileInputRef}
         className="hidden"
@@ -73,12 +75,12 @@ export default function ImageInput({ currentImage }: Props) {
         onChange={handleImageChange}
       />
       {image ? (
-        <div className="relative flex max-w-[300px] flex-col items-center justify-center gap-4">
+        <div className="relative flex flex-col items-center justify-center gap-4">
           <Image
             src={image}
-            width={400}
-            height={400}
-            className="aspect-square object-cover"
+            width={shelter ? 200 : 750}
+            height={shelter ? 200 : 750}
+            className="aspect-square rounded-lg object-cover"
             alt="Preview image"
           />
           {/*
@@ -92,9 +94,8 @@ export default function ImageInput({ currentImage }: Props) {
             <XMarkIcon className="h-5 w-5" />
           </button>
           */}
-
           <button
-            className="bg-gray-200 px-2 py-1"
+            className="rounded-md border px-4 py-2"
             onClick={handleClick}
             type="button"
           >
@@ -103,7 +104,7 @@ export default function ImageInput({ currentImage }: Props) {
         </div>
       ) : (
         <div
-          className={`flex h-full w-full flex-col items-center justify-center gap-1 ${isDragging ? "bg-gray-200" : " "}`}
+          className={`flex h-[400px] w-full flex-col items-center justify-center gap-4 rounded-lg border ${isDragging ? "bg-gray-100" : ""}`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
@@ -111,7 +112,7 @@ export default function ImageInput({ currentImage }: Props) {
           <p>Drop an image to upload</p>
           <p>or</p>
           <button
-            className="bg-gray-200 px-2 py-1"
+            className="rounded-md border px-4 py-2"
             onClick={handleClick}
             type="button"
           >

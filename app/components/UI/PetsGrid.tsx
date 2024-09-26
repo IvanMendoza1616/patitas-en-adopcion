@@ -5,7 +5,6 @@ import LoadingPets from "./LoadingPets";
 import Pagination from "./Pagination";
 import Sort from "../pet-search/Sort";
 import axios from "axios";
-import ShelterPetCard from "../account/pets/ShelterPetCard";
 import PetCard from "../pet-search/pets/PetCard";
 
 type Props = {
@@ -126,27 +125,24 @@ export default function PetsGrid({ params, shelter }: Props) {
 
   if (!dataFetched.success && !isLoading) {
     return (
-      <div className="flex h-[300px] items-center justify-center bg-gray-200 p-4">
-        There was an error with the page.
+      <div className="flex h-[300px] items-center justify-center rounded-md bg-gray-100 p-4 md:h-full">
+        There was an error fetching the pets
       </div>
     );
   }
 
-  const pets = shelter
-    ? dataFetched.data.map((pet) => (
-        <ShelterPetCard key={pet._id.toString()} pet={pet} />
-      ))
-    : dataFetched.data.map((pet) => (
-        <PetCard
-          key={pet._id.toString()}
-          pet={pet}
-          userLat={params.lat}
-          userLon={params.lon}
-        />
-      ));
+  const pets = dataFetched.data.map((pet) => (
+    <PetCard
+      key={pet._id.toString()}
+      pet={pet}
+      userLat={params.lat}
+      userLon={params.lon}
+      shelter={shelter}
+    />
+  ));
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col">
       {!shelter && (
         <Sort
           currentPage={dataFetched.pagination.currentPage}
@@ -159,11 +155,11 @@ export default function PetsGrid({ params, shelter }: Props) {
       {isLoading ? (
         <LoadingPets />
       ) : dataFetched.data.length === 0 ? (
-        <div className="flex h-[300px] items-center justify-center bg-gray-200 p-4">
-          <p>There are no pets with this parameters.</p>
+        <div className="flex h-[300px] items-center justify-center rounded-md bg-gray-100 p-4">
+          <p>There are no pets with this parameters</p>
         </div>
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 bg-gray-200 p-4">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 p-4">
           {pets}
         </div>
       )}

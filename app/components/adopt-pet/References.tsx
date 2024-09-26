@@ -1,87 +1,73 @@
+import TextInput from "../UI/inputs/TextInput";
+
 export default function References() {
   return (
     <div className="grid grid-cols-2 gap-4">
-      <h2 className="col-span-2 text-xl">References</h2>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="reference-name-1">Personal reference #1</label>
-        <input
-          className="px-2"
-          type="text"
-          name="reference-name-1"
-          id="reference-name-1"
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="reference-phone-1">Phone</label>
-        <input
-          className="px-2"
-          type="text"
-          name="reference-phone-1"
-          id="reference-phone-1"
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="reference-relationship-1">Relationship</label>
-        <input
-          className="px-2"
-          type="text"
-          name="reference-relationship-1"
-          id="reference-relationship-1"
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="reference-years-1">Years known</label>
-        <input
-          className="px-2"
-          type="text"
-          name="reference-years-1"
-          id="reference-years-1"
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="reference-name-2">Personal reference #2</label>
-        <input
-          className="px-2"
-          type="text"
-          name="reference-name-2"
-          id="reference-name-2"
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="reference-phone-2">Phone</label>
-        <input
-          className="px-2"
-          type="text"
-          name="reference-phone-2"
-          id="reference-phone-2"
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="reference-relationship-2">Relationship</label>
-        <input
-          className="px-2"
-          type="text"
-          name="reference-relationship-2"
-          id="reference-relationship-2"
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="reference-years-2">Years known</label>
-        <input
-          className="px-2"
-          type="text"
-          name="reference-years-2"
-          id="reference-years-2"
-          required
-        />
-      </div>
+      <h3 className="col-span-full text-xl font-semibold">References</h3>
+      <TextInput
+        label="Personal Reference #1"
+        placeholder="Enter reference name"
+        name="reference-name-1"
+        id="reference-name-1"
+        className="col-span-full md:col-span-1"
+        required
+      />
+      <TextInput
+        label="Phone"
+        placeholder="Enter phone"
+        name="reference-phone-1"
+        id="reference-phone-1"
+        className="col-span-full md:col-span-1"
+        required
+      />
+      <TextInput
+        label="Relationship"
+        placeholder="Enter relationship"
+        name="reference-relationship-1"
+        id="reference-relationship-1"
+        className="col-span-full md:col-span-1"
+        required
+      />
+      <TextInput
+        label="Years known"
+        placeholder="Enter years known"
+        name="reference-years-1"
+        id="reference-years-1"
+        className="col-span-full md:col-span-1"
+        required
+      />
+      <TextInput
+        label="Personal Reference #2"
+        placeholder="Enter reference name"
+        name="reference-name-2"
+        id="reference-name-2"
+        className="col-span-full md:col-span-1"
+        required
+      />
+      <TextInput
+        label="Phone"
+        placeholder="Enter phone"
+        name="reference-phone-2"
+        id="reference-phone-2"
+        className="col-span-full md:col-span-1"
+        required
+      />
+      <TextInput
+        label="Relationship"
+        placeholder="Enter relationship"
+        name="reference-relationship-2"
+        id="reference-relationship-2"
+        className="col-span-full md:col-span-1"
+        required
+      />
+      <TextInput
+        label="Years known"
+        placeholder="Enter years known"
+        name="reference-years-2"
+        id="reference-years-2"
+        className="col-span-full md:col-span-1"
+        required
+      />
     </div>
   );
 }

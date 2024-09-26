@@ -9,7 +9,7 @@ export default function SubmitButton({ children }: Props) {
   const { pending } = useFormStatus();
   return (
     <button
-      className="self-start bg-gray-200 px-2 py-1"
+      className="w-full rounded-lg border bg-black px-4 py-3 text-white"
       type="submit"
       disabled={pending}
     >

@@ -1,7 +1,9 @@
 import { QueryParams } from "@/app/types/types";
 //import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EsriProvider } from "leaflet-geosearch";
+import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import SelectInput from "../../UI/inputs/SelectInput";
 
 type Props = {
   queryParams: QueryParams;
@@ -16,30 +18,28 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const getAddress = async () => {
+      if (queryParams.postalCode && queryParams.postalCode.length === 5) {
+        const data = await provider.search({
+          query: `${queryParams.postalCode}, México`,
+        });
+
+        if (data.length !== 0) setAddress(data[0].label);
+      }
+    };
+
+    getAddress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmitPostalCode = async () => {
     setLoading(true);
-    //Get data from Postal Code
-    /*
-    const response = await axios.get(
-      `https://nominatim.openstreetmap.org/search?postalcode=${postalCode}&format=json&country=mexico`,
-    );
-    const data = response.data;
-    */
-
     const data = await provider.search({
       query: `${postalCode}, México`,
     });
 
-    console.log(data[0]);
-
-    /*
-    const postalCodeResult = data[0].label.split(",")[0];
-    const isValidResult =
-      !isNaN(Number(postalCodeResult)) && postalCodeResult.length === 5;
-      */
-    const isValidResult = true;
-
-    if (postalCode.length !== 5 || data.length === 0 || !isValidResult)
+    if (postalCode.length !== 5 || data.length === 0)
       setError("*Invalid Postal Code");
     else {
       setAddress(data[0].label);
@@ -56,16 +56,17 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
 
   if (!queryParams.postalCode)
     return (
-      <div className="flex flex-col gap-1">
-        {error && <p className="text-xs">{error}</p>}
-
-        <label htmlFor="postalCode">Postal Code</label>
-        <div className="flex gap-2">
+      <div className="flex flex-col gap-2">
+        <label className="text-lg font-semibold" htmlFor="postalCode">
+          Location
+        </label>
+        <div className="flex items-center gap-2">
           <input
             type="number"
+            placeholder="Enter postal code"
             name="postalCode"
             id="postalCode"
-            className="max-w-[60px] px-2"
+            className="w-full rounded-md border px-3 py-2"
             onChange={(e) => {
               e.stopPropagation();
               setError("");
@@ -83,22 +84,23 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
             type="button"
             disabled={loading}
             onClick={handleSubmitPostalCode}
-            className="self-start bg-gray-300 px-4"
+            className="self-stretch rounded-md border p-2"
           >
-            {loading ? "Loading" : "Search"}
+            <MagnifyingGlassIcon className="h-5 w-5" />
           </button>
         </div>
+        {error && <p className="text-xs">{error}</p>}
       </div>
     );
 
   return (
     <>
-      <div className="flex flex-col gap-1">
-        <p>Postal Code</p>
+      <div className="flex flex-col gap-2">
+        <p className="text-lg font-semibold">Location</p>
         <div className="flex flex-col items-start gap-2">
-          <p>{address || queryParams.postalCode}</p>
+          <p>{address || `Postal code: ${queryParams.postalCode}`}</p>
           <button
-            className="bg-gray-300 px-4 py-1"
+            className="rounded-md border px-4 py-1"
             type="button"
             onClick={() => {
               // Check if sort is distance related and if so, reset it
@@ -118,13 +120,15 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
               });
             }}
           >
-            Clear
+            Change
           </button>
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="distance">Distance</label>
-        <select
+        <label className="text-lg font-semibold" htmlFor="distance">
+          Distance
+        </label>
+        <SelectInput
           name="distance"
           id="distance"
           defaultValue={queryParams.distance?.toString()}
@@ -137,7 +141,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
           <option value="100">100 km or less</option>
           <option value="200">200 km or less</option>
           <option value="20038">Any distance</option>
-        </select>
+        </SelectInput>
       </div>
     </>
   );

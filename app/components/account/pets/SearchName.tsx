@@ -20,21 +20,19 @@ export default function SearchInput() {
   };
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-      <div className="flex gap-2">
-        <label htmlFor="searchName">Search:</label>
-        <input
-          ref={inputRef}
-          value={searchName}
-          onChange={(e) => {
-            setSearchName(e.target.value);
-          }}
-          type="text"
-          name="searchName"
-          id="searchName"
-          className="w-full border px-2 sm:max-w-[200px]"
-        />
-      </div>
+    <form className="flex w-full flex-col gap-2" onSubmit={handleSubmit}>
+      <input
+        placeholder="Search name..."
+        ref={inputRef}
+        value={searchName}
+        onChange={(e) => {
+          setSearchName(e.target.value);
+        }}
+        type="text"
+        name="searchName"
+        id="searchName"
+        className="w-full rounded-md border px-3 py-2"
+      />
 
       {queryParams.searchName && (
         <div className="flex w-full items-center gap-4">
@@ -49,7 +47,7 @@ export default function SearchInput() {
             onClick={() => {
               setQueryParams({ searchName: "", page: "1" });
             }}
-            className="bg-gray-200 px-2 py-1"
+            className="rounded-md border px-4 py-1"
           >
             Clear search
           </button>

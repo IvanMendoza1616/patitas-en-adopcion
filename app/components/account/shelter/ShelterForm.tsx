@@ -7,6 +7,8 @@ import { Shelter } from "@/app/types/types";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import ImageInput from "../../edit-pet/ImageInput";
+import TextInput from "../../UI/inputs/TextInput";
+import TextAreaInput from "../../UI/inputs/TextAreaInput";
 
 type Props = {
   shelter: Shelter;
@@ -18,7 +20,11 @@ export default function ShelterForm({ shelter }: Props) {
   const LocationInput = useMemo(
     () =>
       dynamic(() => import("../../UI/LocationInput"), {
-        loading: () => <p>A map is loading</p>,
+        loading: () => (
+          <div className="flex h-[500px] w-full items-center justify-center bg-gray-100">
+            <p>A map is loading...</p>
+          </div>
+        ),
         ssr: false,
       }),
     [],
@@ -33,82 +39,65 @@ export default function ShelterForm({ shelter }: Props) {
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
-      <ImageInput currentImage={shelter.imageUrl} />
+      <ImageInput currentImage={shelter.imageUrl} shelter />
+      <TextInput
+        label="Shelter name"
+        placeholder="Enter shelter name"
+        name="shelter-name"
+        id="shelter-name"
+        defaultValue={shelter.name}
+        required
+      />
+      <TextAreaInput
+        label="Description"
+        placeholder="Add a brief description"
+        name="description"
+        id="description"
+        rows={4}
+        defaultValue={shelter.description}
+        required
+      />
+      <TextInput
+        label="Phone number"
+        placeholder="+52 833 123 4567"
+        name="phone"
+        id="phone"
+        defaultValue={shelter.phone}
+        required
+      />
+      <TextInput
+        label="Email"
+        placeholder="myemail@test.com"
+        name="email"
+        id="email"
+        defaultValue={shelter.email}
+        required
+      />
+      <TextInput
+        label="Facebook"
+        placeholder="Enter your shelter's Facebook"
+        name="facebook"
+        id="facebook"
+        defaultValue={shelter.facebook}
+      />
+      <TextInput
+        label="Instagram"
+        placeholder="Enter your shelter's Instagram"
+        name="instagram"
+        id="instagram"
+        defaultValue={shelter.instagram}
+      />
       <div className="flex flex-col gap-1">
-        <label htmlFor="shelter-name">Shelter Name*</label>
-        <input
-          className="px-2"
-          type="text"
-          name="shelter-name"
-          id="shelter-name"
-          defaultValue={shelter.name}
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="description">Description*</label>
-        <textarea
-          className="resize-none px-2"
-          rows={4}
-          name="description"
-          id="description"
-          defaultValue={shelter.description}
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="phone">Phone*</label>
-        <input
-          className="px-2"
-          type="text"
-          name="phone"
-          id="phone"
-          defaultValue={shelter.phone}
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="email">Email*</label>
-        <input
-          className="px-2"
-          type="text"
-          name="email"
-          id="email"
-          defaultValue={shelter.email}
-          required
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="facebook">Facebook</label>
-        <input
-          className="px-2"
-          type="text"
-          name="facebook"
-          id="facebook"
-          defaultValue={shelter.facebook}
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="instagram">Instagram</label>
-        <input
-          className="px-2"
-          type="text"
-          name="instagram"
-          id="instagram"
-          defaultValue={shelter.instagram}
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <p>Address</p>
+        <p className="font-semibold">Address</p>
         <LocationInput
           defaultAddress={shelter.address}
           defaultCoordinates={shelter.location.coordinates}
         />
       </div>
 
-      <div className="mt-12 flex items-center gap-4">
-        <SubmitButton>Update</SubmitButton>
+      <div className="mt-8 flex flex-col gap-4">
         <FormMessage success={state.success} message={state.message} />
+        <SubmitButton>Update</SubmitButton>
       </div>
     </form>
   );

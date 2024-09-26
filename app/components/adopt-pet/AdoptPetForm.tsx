@@ -24,26 +24,30 @@ export default function AdoptPetForm({ shelterEmail }: Props) {
 
   return (
     <>
-      <form className="flex flex-col gap-8" action={formAction}>
+      <form className="flex flex-col gap-16" action={formAction}>
         <PersonalInformation />
         <HouseholdInformation />
         <LifestyleInformation />
         <References />
         <AdditionalInformation />
-        <div className="col-span-2">
-          <SubmitButton>Send Form</SubmitButton>
+        <div>
           <FormMessage message={state.message} success={state.success} />
+          <SubmitButton>Submit Application</SubmitButton>
         </div>
       </form>
       {state.emailSent && (
-        <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-40">
-          <div className="max-w-[500px] bg-white px-4 py-8">
+        <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-40 p-4">
+          <div className="flex max-w-[500px] flex-col gap-4 rounded-lg bg-white px-4 py-8">
+            <h3 className="text-xl font-semibold">Application Sent</h3>
             <p className="mb-4">
               A notification with all your information has been sent to the
               shelter. You will be contacted by them in order to continue with
               the adoption process.
             </p>
-            <Link className="bg-gray-100 px-2 py-1" href="/pet-search">
+            <Link
+              className="self-start rounded-md border px-4 py-2"
+              href="/pet-search"
+            >
               Close
             </Link>
           </div>

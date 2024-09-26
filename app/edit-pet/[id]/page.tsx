@@ -1,4 +1,5 @@
 import PetForm from "@/app/components/edit-pet/PetForm";
+import ProfileContainer from "@/app/components/UI/containers/ProfileContainer";
 import client from "@/app/lib/db";
 import { Pet } from "@/app/types/types";
 import { auth } from "@/auth";
@@ -17,13 +18,21 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   if (!pet)
     return (
-      <main>
-        <p>Pet not found</p>
-      </main>
+      <ProfileContainer>
+        <div className="flex h-[300px] items-center justify-center">
+          <p>Pet not found</p>
+        </div>
+      </ProfileContainer>
     );
 
   if (pet.ownerId !== session.user.email)
-    return <main>You are not the owner of this pet</main>;
+    return (
+      <ProfileContainer>
+        <div className="flex h-[300px] items-center justify-center">
+          <p>You don&apos;t have permissions to edit this pet</p>
+        </div>
+      </ProfileContainer>
+    );
 
   const formattedPet: Pet = {
     _id: pet._id.toString(),
@@ -42,9 +51,8 @@ export default async function Page({ params }: { params: { id: string } }) {
   };
 
   return (
-    <main className="m-auto w-full max-w-[1200px] bg-gray-100 p-4">
-      <h1 className="mx-auto mb-4 max-w-[500px] text-3xl">Edit {pet.name}</h1>
+    <ProfileContainer>
       <PetForm pet={formattedPet} />
-    </main>
+    </ProfileContainer>
   );
 }

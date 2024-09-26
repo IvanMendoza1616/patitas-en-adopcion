@@ -20,8 +20,8 @@ export default function LocationInput({
   const [address, setAddress] = useState(defaultAddress);
 
   return (
-    <div>
-      <p className="my-2">{address}</p>
+    <div className="flex flex-col gap-4">
+      <p className="">{address}</p>
       <MapContainer
         center={[latitude, longitude]}
         zoom={18}

@@ -14,7 +14,7 @@ export default function ActiveLink({ href, children }: Props) {
 
   return (
     <Link
-      className={`${isActive ? "border-b-2 border-gray-400" : ""} p-1`}
+      className={`${isActive ? "bg-gray-100" : ""} flex items-center gap-2 rounded-md p-4 sm:rounded-none`}
       href={href}
     >
       {children}

@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth();
-
   if (!session) redirect(`/sign-in?redirectTo=/adopt-pet/${params.id}`);
 
   const [pet] = await client
@@ -29,9 +28,18 @@ export default async function Page({ params }: { params: { id: string } }) {
     .toArray();
 
   return (
-    <main className="m-auto w-full max-w-[1200px] bg-gray-100 p-4">
-      <h1 className="mb-6 text-3xl">Adoption form for {pet.name}</h1>
-      <AdoptPetForm shelterEmail={shelter?.email || "testemail@test.com"} />
+    <main className="px-4">
+      <div className="mx-auto flex w-full max-w-[800px] flex-col gap-16 rounded-lg border p-6 shadow-md">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-2xl font-bold">
+            Adoption Application for {pet.name}
+          </h1>
+          <p>
+            Please fill out all sections of this form to apply for pet adoption.
+          </p>
+        </div>
+        <AdoptPetForm shelterEmail={shelter?.email || "testemail@test.com"} />
+      </div>
     </main>
   );
 }

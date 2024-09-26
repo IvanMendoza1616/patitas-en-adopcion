@@ -1,10 +1,12 @@
 "use client";
+import ProfileContainer from "@/app/components/UI/containers/ProfileContainer";
+
 export default function Error() {
   return (
-    <main className="m-auto w-full max-w-[1200px] bg-gray-100 p-4">
-      <div className="mx-auto flex w-full max-w-[500px] flex-col items-center justify-center gap-8 bg-gray-200 px-4 py-8">
+    <ProfileContainer>
+      <div className="flex h-[300px] items-center justify-center">
         <p>There was an error fetching the shelter</p>
       </div>
-    </main>
+    </ProfileContainer>
   );
 }

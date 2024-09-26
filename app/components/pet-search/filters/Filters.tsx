@@ -5,6 +5,8 @@ import { FormEvent, useState } from "react";
 import FilterTag from "./FilterTag";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+import SelectInput from "../../UI/inputs/SelectInput";
+import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 
 type FormDataObject = {
   [key: string]: FormDataEntryValue | FormDataEntryValue[];
@@ -16,7 +18,17 @@ export default function Filters() {
   const DistanceInput = useMemo(
     () =>
       dynamic(() => import("./DistanceInput"), {
-        loading: () => <p>Postal Code</p>,
+        loading: () => (
+          <div className="flex flex-col gap-2">
+            <p className="text-lg font-semibold">Location</p>
+            <div className="flex items-center gap-2">
+              <div className="flex h-[42px] w-full animate-pulse items-center gap-2 rounded-md bg-gray-100" />
+              <button className="self-stretch rounded-md border p-2" disabled>
+                <MagnifyingGlassIcon className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        ),
         ssr: false,
       }),
     [],
@@ -51,21 +63,23 @@ export default function Filters() {
   return (
     <>
       <form
-        className={`${isOpen ? "grid" : "hidden"} w-full grid-cols-2 gap-6 bg-gray-200 p-4 md:flex md:w-1/4 md:flex-col`}
+        className={`${isOpen ? "grid" : "hidden"} w-full grid-cols-2 gap-6 self-start rounded-lg border px-4 py-8 shadow-md md:flex md:w-1/4 md:flex-col`}
         onChange={handleFormChange}
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-col gap-1">
-          <label htmlFor="species">Species</label>
-          <select
+        <div className="flex flex-col gap-2">
+          <label className="text-lg font-semibold" htmlFor="species">
+            Animal Type
+          </label>
+          <SelectInput
             name="species"
             id="species"
             defaultValue={queryParams.species?.toString()}
           >
-            <option value="">Any</option>
+            <option value="">All</option>
             <option value="dog">Dog</option>
             <option value="cat">Cat</option>
-          </select>
+          </SelectInput>
         </div>
         <DistanceInput
           queryParams={queryParams}
@@ -106,7 +120,7 @@ export default function Filters() {
           className={`${!isOpen ? "hidden" : "flex"} col-span-2 items-center justify-center md:hidden`}
         >
           <button
-            className="bg-gray-300 px-4 py-1"
+            className="rounded-md border px-4 py-1"
             onClick={() => {
               setIsOpen(false);
             }}
@@ -116,7 +130,7 @@ export default function Filters() {
         </div>
       </form>
       <div
-        className={`${isOpen ? "hidden" : "flex"} flex-col items-center justify-center gap-8 bg-gray-200 p-4 md:hidden`}
+        className={`${isOpen ? "hidden" : "flex"} flex-col items-center justify-center gap-8 p-4 md:hidden`}
       >
         {(queryParams.species ||
           queryParams.postalCode ||
@@ -124,24 +138,26 @@ export default function Filters() {
           queryParams.age ||
           queryParams.sex ||
           queryParams.size) && (
-          <div className="flex flex-wrap items-center gap-2 self-start">
-            <p>Current filters:</p>
-            <FilterTag filter={queryParams.species} />
-            <FilterTag filter={queryParams.postalCode} />
-            <FilterTag
-              filter={
-                queryParams.distance === "20038" ? null : queryParams.distance
-              }
-              suffix=" Km or less"
-            />
-            <FilterTag filter={queryParams.age} />
-            <FilterTag filter={queryParams.sex} />
-            <FilterTag filter={queryParams.size} />
+          <div className="flex w-full flex-col gap-2">
+            <p className="text-lg font-semibold">Current filters:</p>
+            <div className="flex flex-wrap items-center gap-2 self-start">
+              <FilterTag filter={queryParams.species} />
+              <FilterTag filter={queryParams.postalCode} />
+              <FilterTag
+                filter={
+                  queryParams.distance === "20038" ? null : queryParams.distance
+                }
+                suffix=" Km or less"
+              />
+              <FilterTag filter={queryParams.age} />
+              <FilterTag filter={queryParams.sex} />
+              <FilterTag filter={queryParams.size} />
+            </div>
           </div>
         )}
 
         <button
-          className="bg-gray-300 px-4 py-1"
+          className="rounded-md border px-4 py-1"
           onClick={() => {
             setIsOpen(true);
           }}

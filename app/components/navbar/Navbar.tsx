@@ -7,22 +7,17 @@ import Image from "next/image";
 export default async function Navbar() {
   const session = await auth();
   return (
-    <div className="mb-0 shadow-md md:mb-8">
-      <nav className="mx-auto grid max-w-[1200px] grid-cols-2 content-center gap-y-10 px-8 py-10 md:grid-cols-3">
-        <div>
-          <Link href="/">Logo</Link>
+    <div className="mb-8 shadow-md">
+      <nav className="mx-auto grid max-w-[1200px] grid-cols-3 content-center gap-x-8 gap-y-10 px-8 py-10 md:grid-cols-3">
+        <div className="col-span-2 md:col-span-1">
+          <Link className="text-2xl font-bold" href="/">
+            Adopt a Pet
+          </Link>
         </div>
-        {/*
-         <ul className="hidden items-center justify-end gap-4 md:order-3 md:flex">
-          <li>Link 1</li>
-          <li>Link 2</li>
-          <li>Link 3</li>
-        </ul>
-        */}
         <div className="hidden items-center justify-end gap-4 md:order-3 md:flex">
           <div className="flex items-center justify-center gap-4">
             <Link href="/pet-search">Search Pets</Link>
-            <Link href="/pet-search">About Us</Link>
+            <Link href="">About Us</Link>
             {session ? (
               <Link className="ml-4" href="/account">
                 <Image
@@ -34,13 +29,16 @@ export default async function Navbar() {
                 />
               </Link>
             ) : (
-              <Link className="ml-4 bg-gray-100 px-2 py-1" href="/sign-in">
+              <Link
+                className="ml-4 rounded-md border px-4 py-2"
+                href="/sign-in"
+              >
                 Sign In
               </Link>
             )}
           </div>
         </div>
-        <MobileNavbar />
+        <MobileNavbar session={session} />
         <SearchInput />
       </nav>
     </div>

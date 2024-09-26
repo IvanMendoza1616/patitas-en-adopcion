@@ -6,7 +6,11 @@
 html {
   scrollbar-gutter: stable;
 }
-*/
+  */
+
+body {
+  overflow-y: scroll;
+}
 
 @layer utilities {
   input[type="number"]::-webkit-inner-spin-button,

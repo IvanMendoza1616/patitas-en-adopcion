@@ -2,13 +2,20 @@ import { auth } from "@/auth";
 import PetForm from "../components/edit-pet/PetForm";
 import { Pet } from "../types/types";
 import { redirect } from "next/navigation";
+import ProfileContainer from "../components/UI/containers/ProfileContainer";
 
 export default async function Page() {
   const session = await auth();
   if (!session) redirect("/sign-in?redirectTo=/new-pet");
 
   if (session.user.role !== "admin")
-    return <main>You dont have privileges to create a pet.</main>;
+    return (
+      <ProfileContainer>
+        <div className="flex h-[300px] items-center justify-center">
+          <p>You don&apos;t have permissions to create a pet</p>
+        </div>
+      </ProfileContainer>
+    );
 
   const pet: Pet = {
     _id: "",
@@ -27,9 +34,8 @@ export default async function Page() {
   };
 
   return (
-    <main className="m-auto w-full max-w-[1200px] bg-gray-100 p-4">
-      <h1 className="mx-auto mb-4 max-w-[500px] text-3xl">Create Pet</h1>
+    <ProfileContainer>
       <PetForm pet={pet} />
-    </main>
+    </ProfileContainer>
   );
 }

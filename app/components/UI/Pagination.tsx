@@ -27,20 +27,22 @@ export default function Pagination({ currentPage, totalPages }: Props) {
   const stop = tempStop > totalPages ? totalPages : tempStop;
 
   return (
-    <div className="flex items-center justify-center gap-2 bg-gray-200 p-4">
+    <div className="flex items-center justify-center gap-2 p-4">
       <button
         disabled={currentPage === 1}
-        className={`flex aspect-square w-[30px] items-center justify-center ${currentPage === 1 ? "bg-gray-100" : "bg-gray-300"}`}
+        className="flex aspect-square w-[40px] items-center justify-center rounded-md border"
         onClick={() => {
           setQueryParams({ page: (currentPage - 1).toString() });
         }}
       >
-        <ChevronLeftIcon className="w-5" />
+        <ChevronLeftIcon
+          className={`w-4 ${currentPage === 1 ? "text-gray-400" : ""}`}
+        />
       </button>
       {start > 1 && (
         <>
           <button
-            className={`flex aspect-square w-[30px] items-center justify-center ${currentPage === 1 ? "bg-gray-100" : "bg-gray-300"}`}
+            className="flex aspect-square w-[40px] items-center justify-center rounded-md border"
             onClick={() => {
               setQueryParams({ page: "1" });
             }}
@@ -48,8 +50,8 @@ export default function Pagination({ currentPage, totalPages }: Props) {
             1
           </button>
           {start > 2 && (
-            <p className="flex aspect-square w-[10px] items-center justify-center">
-              ...
+            <p className="flex aspect-square w-[40px] items-center justify-center rounded-md border text-gray-400">
+              ···
             </p>
           )}
         </>
@@ -57,7 +59,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
       {Array.from({ length: stop - start + 1 }, (_, index) => (
         <button
           disabled={start + index === currentPage}
-          className={`aspect-square w-[30px] items-center justify-center md:flex ${start + index === currentPage ? "bg-gray-100" : "bg-gray-300"}`}
+          className={`aspect-square w-[40px] items-center justify-center rounded-md border md:flex ${start + index === currentPage ? "bg-gray-100" : ""}`}
           key={start + index}
           onClick={() => {
             setQueryParams({ page: (start + index).toString() });
@@ -69,12 +71,12 @@ export default function Pagination({ currentPage, totalPages }: Props) {
       {stop < totalPages && (
         <>
           {stop < totalPages - 1 && (
-            <p className="flex aspect-square w-[10px] items-center justify-center">
-              ...
+            <p className="flex aspect-square w-[40px] items-center justify-center rounded-md border text-gray-400">
+              ···
             </p>
           )}
           <button
-            className={`flex aspect-square w-[30px] items-center justify-center ${currentPage === totalPages ? "bg-gray-100" : "bg-gray-300"}`}
+            className="flex aspect-square w-[40px] items-center justify-center rounded-md border"
             onClick={() => {
               setQueryParams({ page: totalPages.toString() });
             }}
@@ -85,12 +87,14 @@ export default function Pagination({ currentPage, totalPages }: Props) {
       )}
       <button
         disabled={currentPage === totalPages}
-        className={`flex aspect-square w-[30px] items-center justify-center ${currentPage === totalPages ? "bg-gray-100" : "bg-gray-300"}`}
+        className="flex aspect-square w-[40px] items-center justify-center rounded-md border"
         onClick={() => {
           setQueryParams({ page: (currentPage + 1).toString() });
         }}
       >
-        <ChevronRightIcon className="w-5" />
+        <ChevronRightIcon
+          className={`w-4 ${currentPage === totalPages ? "text-gray-400" : ""}`}
+        />
       </button>
     </div>
   );

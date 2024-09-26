@@ -1,4 +1,5 @@
 import { QueryParamsKeys } from "@/app/types/types";
+import CheckboxInput from "../../UI/inputs/CheckboxInput";
 
 type inputValues = {
   value: string;
@@ -19,21 +20,19 @@ export default function Fieldset({
   inputs,
 }: Props) {
   const inputsArray = inputs.map((input) => (
-    <div key={input.value} className="flex gap-2">
-      <input
-        type="checkbox"
-        name={fieldsetName}
-        id={input.value}
-        value={input.value}
-        defaultChecked={defaultValue?.split(",").includes(input.value)}
-      />
-      <label htmlFor={input.value}>{input.label}</label>
-    </div>
+    <CheckboxInput
+      key={input.value}
+      label={input.label}
+      name={fieldsetName}
+      id={input.value}
+      value={input.value}
+      defaultChecked={defaultValue?.split(",").includes(input.value)}
+    />
   ));
 
   return (
     <fieldset className="flex flex-col gap-1">
-      <legend>{legend}</legend>
+      <legend className="mb-1 text-lg font-semibold">{legend}</legend>
       {inputsArray}
     </fieldset>
   );

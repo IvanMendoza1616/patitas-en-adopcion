@@ -1,4 +1,5 @@
 import { useQueryParams } from "@/app/hooks/useQueryParams";
+import SelectInput from "../UI/inputs/SelectInput";
 
 type Props = {
   currentPage: number;
@@ -21,13 +22,15 @@ export default function Sort({
     currentPage * pageSize < totalCount ? currentPage * pageSize : totalCount;
 
   return (
-    <div className="flex items-center justify-between gap-2 bg-gray-200 p-4">
-      <div className="pr-8">
+    <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="order-2 sm:order-1">
         {!isLoading && (
-          <p>
-            {totalCount === 0
-              ? "No results "
-              : `Showing ${startingValue} - ${endingValue} of ${totalCount} pets `}
+          <div className="flex flex-wrap items-center gap-2">
+            <span>
+              {totalCount === 0
+                ? "No results "
+                : `Showing ${startingValue} - ${endingValue} of ${totalCount} pets `}
+            </span>
 
             {queryParams.search && (
               <>
@@ -38,7 +41,7 @@ export default function Sort({
                   </span>
                 </span>
                 <button
-                  className="bg-gray-300 px-4"
+                  className="rounded-md border px-4 py-1"
                   type="button"
                   onClick={() => {
                     setQueryParams({ search: "", page: "1" });
@@ -48,12 +51,12 @@ export default function Sort({
                 </button>
               </>
             )}
-          </p>
+          </div>
         )}
       </div>
-      <div>
+      <div className="order-1 flex items-center gap-2 sm:order-2">
         <label htmlFor="sort">Sort by: </label>
-        <select
+        <SelectInput
           name="sort"
           id="sort"
           defaultValue={queryParams.sort?.toString()}
@@ -75,7 +78,7 @@ export default function Sort({
                 <option value="farthest">Farthest</option>
               </>
             )}
-        </select>
+        </SelectInput>
       </div>
     </div>
   );

@@ -1,20 +1,28 @@
+import SectionContainer from "@/app/components/account/container/SectionContainer";
 import ShelterForm from "@/app/components/account/shelter/ShelterForm";
 import client from "@/app/lib/db";
 import { Shelter } from "@/app/types/types";
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await auth();
-  if (!session) return;
+  if (!session) redirect("/sign-in?redirectTo=/account/shelter");
+
+  if (session.user.role !== "admin")
+    return (
+      <SectionContainer title="My Shelter">
+        <div className="flex h-[300px] items-center justify-center">
+          <p>You don&apos;t have permissions to access this page</p>
+        </div>
+      </SectionContainer>
+    );
 
   const [shelter] = await client
     .db("petsAdoption")
     .collection("shelters")
     .find({ ownerId: session.user.email })
     .toArray();
-
-  if (!shelter)
-    return <div>Error initializing shelter, contact administrator</div>;
 
   const formattedShelter: Shelter = {
     _id: shelter._id.toString(),
@@ -31,9 +39,8 @@ export default async function Page() {
   };
 
   return (
-    <div className="bg-gray-300 p-4">
-      <h2 className="mb-6 text-2xl">Shelter Information</h2>
+    <SectionContainer title="My Shelter">
       <ShelterForm shelter={formattedShelter} />
-    </div>
+    </SectionContainer>
   );
 }

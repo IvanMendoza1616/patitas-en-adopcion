@@ -8,38 +8,48 @@ type Props = {
   pet: Pet;
   userLat: string | null;
   userLon: string | null;
+  shelter?: boolean;
 };
 
-export default function ShelterPetCard({ pet, userLat, userLon }: Props) {
+export default function ShelterPetCard({
+  pet,
+  userLat,
+  userLon,
+  shelter,
+}: Props) {
   return (
     <Link
-      href={`/pet/${pet._id}`}
-      className="flex flex-col items-center justify-center bg-gray-300 p-4"
+      href={`/${shelter ? "edit-pet" : "pet"}/${pet._id}`}
+      className="flex flex-col justify-center overflow-hidden rounded-lg border shadow-md"
       key={pet._id}
     >
       <img
         src={pet.imageUrl}
         alt={pet.name}
-        className="aspect-square w-full object-cover"
+        className="h-[200px] w-full object-cover"
       />
-      <p className="text-2xl">{pet.name}</p>
-      <p>
-        {capitalizeFirstLetter(pet.sex)}, {capitalizeFirstLetter(pet.size)}
-      </p>
-      <p>{getAge(pet.birthdate)}</p>
-      {userLat && userLon && (
+      <div className="p-4">
+        <p className="mb-2 text-xl font-semibold">{pet.name}</p>
         <p>
-          {Math.floor(
-            haversineFormula(
-              +userLat,
-              +userLon,
-              pet.location.coordinates[1],
-              pet.location.coordinates[0],
-            ),
-          )}{" "}
-          Km from you
+          {capitalizeFirstLetter(pet.sex)},{" "}
+          {capitalizeFirstLetter(pet.size === "x-large" ? "X-Large" : pet.size)}
         </p>
-      )}
+        <p>Age: {getAge(pet.birthdate)}</p>
+        {userLat && userLon && (
+          <p>
+            Distance:{" "}
+            {Math.floor(
+              haversineFormula(
+                +userLat,
+                +userLon,
+                pet.location.coordinates[1],
+                pet.location.coordinates[0],
+              ),
+            )}{" "}
+            Km
+          </p>
+        )}
+      </div>
     </Link>
   );
 }

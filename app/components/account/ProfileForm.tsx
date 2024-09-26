@@ -3,6 +3,7 @@ import { updateUser } from "@/app/actions";
 import { useFormState } from "react-dom";
 import SubmitButton from "../UI/SubmitButton";
 import FormMessage from "./FormMessage";
+import TextInput from "../UI/inputs/TextInput";
 
 type Props = {
   sessionUser: {
@@ -20,29 +21,23 @@ export default function ProfileForm({ sessionUser }: Props) {
   });
 
   return (
-    <div className="bg-gray-300 p-4">
-      <h2 className="mb-6 text-2xl">Profile Information</h2>
-      <form action={formAction} className="flex flex-col gap-4 sm:max-w-[50%]">
-        <div className="flex flex-col">
-          <p>Email:</p>
-          <p>{sessionUser.email}</p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="name">Name*</label>
-          <input
-            className="px-2"
-            type="text"
-            name="name"
-            id="name"
-            defaultValue={sessionUser.name}
-            required
-          />
-        </div>
-        <div className="mt-12 flex items-center gap-4">
-          <SubmitButton>Update</SubmitButton>
-          <FormMessage message={state.message} success={state.success} />
-        </div>
-      </form>
-    </div>
+    <form action={formAction} className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <p className="font-semibold">Email</p>
+        <p>{sessionUser.email}</p>
+      </div>
+      <TextInput
+        label="Name"
+        placeholder="John Doe"
+        name="name"
+        id={"name"}
+        defaultValue={sessionUser.name}
+        required
+      />
+      <div className="mt-8 flex flex-col gap-4">
+        <FormMessage message={state.message} success={state.success} />
+        <SubmitButton>Update</SubmitButton>
+      </div>
+    </form>
   );
 }
