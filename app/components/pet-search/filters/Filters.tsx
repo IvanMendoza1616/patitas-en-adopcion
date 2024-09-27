@@ -6,7 +6,7 @@ import FilterTag from "./FilterTag";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import SelectInput from "../../UI/inputs/SelectInput";
-import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import { FunnelIcon, MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 
 type FormDataObject = {
   [key: string]: FormDataEntryValue | FormDataEntryValue[];
@@ -67,7 +67,7 @@ export default function Filters() {
         onChange={handleFormChange}
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-col gap-2">
+        <div className="col-span-full flex flex-col gap-2 sm:col-span-1">
           <label className="text-lg font-semibold" htmlFor="species">
             Animal Type
           </label>
@@ -82,6 +82,7 @@ export default function Filters() {
           </SelectInput>
         </div>
         <DistanceInput
+          className="col-span-full sm:col-span-1"
           queryParams={queryParams}
           setQueryParams={setQueryParams}
         />
@@ -117,14 +118,15 @@ export default function Filters() {
           ]}
         />
         <div
-          className={`${!isOpen ? "hidden" : "flex"} col-span-2 items-center justify-center md:hidden`}
+          className={`${!isOpen ? "hidden" : "flex"} col-span-full items-center justify-center md:hidden`}
         >
           <button
-            className="rounded-md border px-4 py-1"
+            className="flex w-full items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-white shadow-md"
             onClick={() => {
               setIsOpen(false);
             }}
           >
+            <FunnelIcon className="w-4" />
             Close Filters
           </button>
         </div>
@@ -142,7 +144,7 @@ export default function Filters() {
             <p className="text-lg font-semibold">Current filters:</p>
             <div className="flex flex-wrap items-center gap-2 self-start">
               <FilterTag filter={queryParams.species} />
-              <FilterTag filter={queryParams.postalCode} />
+              <FilterTag filter={queryParams.postalCode} prefix="CP: " />
               <FilterTag
                 filter={
                   queryParams.distance === "20038" ? null : queryParams.distance
@@ -157,11 +159,12 @@ export default function Filters() {
         )}
 
         <button
-          className="rounded-md border px-4 py-1"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-white shadow-md"
           onClick={() => {
             setIsOpen(true);
           }}
         >
+          <FunnelIcon className="w-4" />
           Open Filters
         </button>
       </div>

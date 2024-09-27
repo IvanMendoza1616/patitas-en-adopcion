@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import SectionContainer from "@/app/components/account/container/SectionContainer";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Analytics",
+  description:
+    "View detailed analytics and track key metrics related to your shelter's performance, adoptions, and engagement.",
+};
 
 export default async function Page() {
   const session = await auth();

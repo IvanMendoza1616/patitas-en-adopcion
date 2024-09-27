@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import PetForm from "../components/edit-pet/PetForm";
 import { Pet } from "../types/types";
 import { redirect } from "next/navigation";
 import ProfileContainer from "../components/UI/containers/ProfileContainer";
+
+export const metadata: Metadata = {
+  title: "New Pet",
+  description: "Create a new pet.",
+};
 
 export default async function Page() {
   const session = await auth();

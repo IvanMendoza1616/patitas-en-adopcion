@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import ProfileContainer from "@/app/components/UI/containers/ProfileContainer";
 import client from "@/app/lib/db";
 import { getAge, getTimeAgo } from "@/app/utils/formatDate";
@@ -5,6 +6,28 @@ import { capitalizeFirstLetter } from "@/app/utils/textFormat";
 import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // fetch data
+  const [pet] = await client
+    .db("petsAdoption")
+    .collection("pets")
+    .find({ _id: new ObjectId(params.id) })
+    .toArray();
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: pet.name,
+    openGraph: {
+      images: [pet.imageUrl, ...previousImages],
+    },
+  };
+}
 
 export default async function Page({ params }: { params: { id: string } }) {
   //Workaround while models are created

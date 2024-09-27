@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { signIn, auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +7,11 @@ import {
   faGithub,
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
+
+export const metadata: Metadata = {
+  title: "Sign In",
+  description: "Sign in to Adopt a Pet.",
+};
 
 export default async function Page({
   searchParams,

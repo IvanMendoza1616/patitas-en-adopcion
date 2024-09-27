@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import PetForm from "@/app/components/edit-pet/PetForm";
 import ProfileContainer from "@/app/components/UI/containers/ProfileContainer";
 import client from "@/app/lib/db";
@@ -5,6 +6,28 @@ import { Pet } from "@/app/types/types";
 import { auth } from "@/auth";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // fetch data
+  const [pet] = await client
+    .db("petsAdoption")
+    .collection("pets")
+    .find({ _id: new ObjectId(params.id) })
+    .toArray();
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: `Edit ${pet.name}`,
+    openGraph: {
+      images: [pet.imageUrl, ...previousImages],
+    },
+  };
+}
 
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth();

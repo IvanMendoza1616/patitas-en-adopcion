@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { QueryParams } from "@/app/types/types";
 import SearchName from "@/app/components/account/pets/SearchName";
 import AdoptedToggle from "@/app/components/account/pets/AdoptedToggle";
@@ -6,6 +7,12 @@ import Link from "next/link";
 import SectionContainer from "@/app/components/account/container/SectionContainer";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "My Pets",
+  description:
+    "Edit and update information about pets currently available for adoption at your shelter.",
+};
 
 export default async function Page({
   searchParams,

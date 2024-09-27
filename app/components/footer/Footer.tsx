@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
   return (
@@ -32,8 +34,22 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h3 className="text-lg font-semibold">Stay Connected</h3>
             <div className="flex gap-2">
-              <p>Facebook</p>
-              <p>Instagram</p>
+              <a
+                className="flex items-center justify-center rounded-md border bg-white px-3 py-1"
+                target="_blank"
+                rel="noreferrer"
+                href="https://www.facebook.com/creaciones.morit4"
+              >
+                <FontAwesomeIcon className="h-4 w-4" icon={faFacebookF} />
+              </a>
+              <a
+                className="rounded-md border bg-white px-3 py-2"
+                target="_blank"
+                rel="noreferrer"
+                href="https://www.instagram.com/crea_morita"
+              >
+                <FontAwesomeIcon className="h-5 w-5" icon={faInstagram} />
+              </a>
             </div>
           </div>
         </div>

@@ -20,7 +20,10 @@ export default function SearchInput() {
   };
 
   return (
-    <form className="flex w-full flex-col gap-2" onSubmit={handleSubmit}>
+    <form
+      className="flex w-full flex-col gap-2 sm:max-w-[300px]"
+      onSubmit={handleSubmit}
+    >
       <input
         placeholder="Search name..."
         ref={inputRef}

@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import client from "@/app/lib/db";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import { ObjectId } from "mongodb";
@@ -5,6 +6,28 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import ProfileContainer from "@/app/components/UI/containers/ProfileContainer";
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // fetch data
+  const [shelter] = await client
+    .db("petsAdoption")
+    .collection("shelters")
+    .find({ _id: new ObjectId(params.id) })
+    .toArray();
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: shelter.name,
+    openGraph: {
+      images: [shelter.imageUrl, ...previousImages],
+    },
+  };
+}
 
 export default async function Page({ params }: { params: { id: string } }) {
   const [shelter] = await client

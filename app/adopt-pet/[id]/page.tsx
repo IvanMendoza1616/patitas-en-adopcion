@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import AdoptPetForm from "@/app/components/adopt-pet/AdoptPetForm";
 import client from "@/app/lib/db";
 import { auth } from "@/auth";
 import { ObjectId } from "mongodb";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Adoption Application",
+  description:
+    "Complete and submit an adoption application to start the process of welcoming a new pet into your home.",
+};
 
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth();

@@ -8,11 +8,16 @@ import SelectInput from "../../UI/inputs/SelectInput";
 type Props = {
   queryParams: QueryParams;
   setQueryParams: (newParams: Record<string, string>) => void;
+  className?: string;
 };
 
 const provider = new EsriProvider();
 
-export default function DistanceInput({ queryParams, setQueryParams }: Props) {
+export default function DistanceInput({
+  queryParams,
+  setQueryParams,
+  className,
+}: Props) {
   const [postalCode, setPostalCode] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
@@ -56,7 +61,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
 
   if (!queryParams.postalCode)
     return (
-      <div className="flex flex-col gap-2">
+      <div className={`flex flex-col gap-2 ${className}`}>
         <label className="text-lg font-semibold" htmlFor="postalCode">
           Location
         </label>
@@ -95,7 +100,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
 
   return (
     <>
-      <div className="flex flex-col gap-2">
+      <div className={`flex flex-col gap-2 ${className}`}>
         <p className="text-lg font-semibold">Location</p>
         <div className="flex flex-col items-start gap-2">
           <p>{address || `Postal code: ${queryParams.postalCode}`}</p>
@@ -124,7 +129,7 @@ export default function DistanceInput({ queryParams, setQueryParams }: Props) {
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-1">
+      <div className={`flex flex-col gap-1 ${className}`}>
         <label className="text-lg font-semibold" htmlFor="distance">
           Distance
         </label>

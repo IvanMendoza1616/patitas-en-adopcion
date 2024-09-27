@@ -7,6 +7,7 @@ import Image from "next/image";
 import {
   HomeIcon,
   MagnifyingGlassIcon,
+  UserCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 
@@ -47,25 +48,31 @@ export default function MobileNavbar({ session }: Props) {
           </button>
           <div className="flex flex-col gap-4 font-semibold">
             {session ? (
-              <Link
-                href="/account"
-                className="mb-4 flex items-center gap-2"
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-              >
-                <Image
-                  className="rounded-full"
-                  src={session.user.image}
-                  alt="User profile picture"
-                  width={40}
-                  height={40}
-                />
-                <div>
-                  <p>{session.user.name}</p>
-                  <p className="text-sm font-normal">{session.user.email}</p>
+              <>
+                <div className="mb-4 flex items-center gap-2">
+                  <Image
+                    className="rounded-full"
+                    src={session.user.image}
+                    alt="User profile picture"
+                    width={40}
+                    height={40}
+                  />
+                  <div>
+                    <p>{session.user.name}</p>
+                    <p className="text-sm font-normal">{session.user.email}</p>
+                  </div>
                 </div>
-              </Link>
+                <Link
+                  href="/account"
+                  className="flex items-center gap-2"
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
+                  <UserCircleIcon className="w-4" />
+                  My Account
+                </Link>
+              </>
             ) : (
               <Link
                 href="/sign-in"

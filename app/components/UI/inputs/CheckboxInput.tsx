@@ -38,7 +38,7 @@ export default function CheckboxInput({
         onChange={onChange}
         required={required}
       />
-      <label className={`${inverted ? "order-1" : ""} w-[110px]`} htmlFor={id}>
+      <label className={`${inverted ? "order-1" : ""}`} htmlFor={id}>
         {label}
       </label>
     </div>

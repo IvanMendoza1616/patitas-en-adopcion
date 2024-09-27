@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import SectionContainer from "@/app/components/account/container/SectionContainer";
 import ShelterForm from "@/app/components/account/shelter/ShelterForm";
 import client from "@/app/lib/db";
 import { Shelter } from "@/app/types/types";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "My Shelter",
+  description: "Update and manage details about your pet shelter.",
+};
 
 export default async function Page() {
   const session = await auth();
