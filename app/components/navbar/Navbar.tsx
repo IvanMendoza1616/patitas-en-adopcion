@@ -3,6 +3,8 @@ import SearchInput from "./SearchInput";
 import MobileNavbar from "./MobileNavbar";
 import { auth } from "@/auth";
 import Image from "next/image";
+import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
+import Button from "../UI/Button";
 
 export default async function Navbar() {
   const session = await auth();
@@ -17,7 +19,6 @@ export default async function Navbar() {
         <div className="hidden items-center justify-end gap-4 md:order-3 md:flex">
           <div className="flex items-center justify-center gap-4">
             <Link href="/pet-search">Search Pets</Link>
-            <Link href="">About Us</Link>
             {session ? (
               <Link className="ml-4" href="/account">
                 <Image
@@ -29,11 +30,11 @@ export default async function Navbar() {
                 />
               </Link>
             ) : (
-              <Link
-                className="ml-4 rounded-md border px-4 py-2"
-                href="/sign-in"
-              >
-                Sign In
+              <Link className="ml-4 font-semibold" href="/sign-in">
+                <Button type="button">
+                  <ArrowRightEndOnRectangleIcon className="w-5" />
+                  Sign In
+                </Button>
               </Link>
             )}
           </div>

@@ -6,6 +6,7 @@ import { capitalizeFirstLetter } from "@/app/utils/textFormat";
 import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
+import Button from "@/app/components/UI/Button";
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -120,11 +121,8 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
 
         {!pet.adopted && (
-          <Link
-            className="rounded-md border bg-black px-4 py-3 text-center text-white shadow-md"
-            href={`/adopt-pet/${params.id}`}
-          >
-            Adopt {pet.name}
+          <Link href={`/adopt-pet/${params.id}`}>
+            <Button type="submit">Adopt {pet.name}</Button>
           </Link>
         )}
       </div>

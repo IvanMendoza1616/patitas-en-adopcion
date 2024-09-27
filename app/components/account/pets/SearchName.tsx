@@ -1,6 +1,7 @@
 "use client";
 import { useQueryParams } from "@/app/hooks/useQueryParams";
 import { FormEvent, useEffect, useRef, useState } from "react";
+import Button from "../../UI/Button";
 
 export default function SearchInput() {
   const { queryParams, setQueryParams } = useQueryParams();
@@ -45,15 +46,15 @@ export default function SearchInput() {
               &quot;{queryParams.searchName}&quot;
             </span>
           </p>
-          <button
+          <Button
+            variant="secondary"
             type="button"
             onClick={() => {
               setQueryParams({ searchName: "", page: "1" });
             }}
-            className="rounded-md border px-4 py-1"
           >
             Clear search
-          </button>
+          </Button>
         </div>
       )}
     </form>

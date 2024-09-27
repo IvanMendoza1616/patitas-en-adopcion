@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import SelectInput from "../../UI/inputs/SelectInput";
 import { FunnelIcon, MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import Button from "../../UI/Button";
 
 type FormDataObject = {
   [key: string]: FormDataEntryValue | FormDataEntryValue[];
@@ -120,15 +121,15 @@ export default function Filters() {
         <div
           className={`${!isOpen ? "hidden" : "flex"} col-span-full items-center justify-center md:hidden`}
         >
-          <button
-            className="flex w-full items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-white shadow-md"
+          <Button
+            type="button"
             onClick={() => {
               setIsOpen(false);
             }}
           >
             <FunnelIcon className="w-4" />
             Close Filters
-          </button>
+          </Button>
         </div>
       </form>
       <div
@@ -158,15 +159,15 @@ export default function Filters() {
           </div>
         )}
 
-        <button
-          className="flex w-full items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-white shadow-md"
+        <Button
+          type="button"
           onClick={() => {
             setIsOpen(true);
           }}
         >
           <FunnelIcon className="w-4" />
           Open Filters
-        </button>
+        </Button>
       </div>
     </>
   );

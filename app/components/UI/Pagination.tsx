@@ -29,6 +29,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
   return (
     <div className="flex items-center justify-center gap-2 p-4">
       <button
+        type="button"
         disabled={currentPage === 1}
         className="flex aspect-square w-[40px] items-center justify-center rounded-md border"
         onClick={() => {
@@ -42,6 +43,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
       {start > 1 && (
         <>
           <button
+            type="button"
             className="flex aspect-square w-[40px] items-center justify-center rounded-md border"
             onClick={() => {
               setQueryParams({ page: "1" });
@@ -58,6 +60,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
       )}
       {Array.from({ length: stop - start + 1 }, (_, index) => (
         <button
+          type="button"
           disabled={start + index === currentPage}
           className={`aspect-square w-[40px] items-center justify-center rounded-md border md:flex ${start + index === currentPage ? "bg-gray-100" : ""}`}
           key={start + index}
@@ -76,6 +79,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
             </p>
           )}
           <button
+            type="button"
             className="flex aspect-square w-[40px] items-center justify-center rounded-md border"
             onClick={() => {
               setQueryParams({ page: totalPages.toString() });
@@ -86,6 +90,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
         </>
       )}
       <button
+        type="button"
         disabled={currentPage === totalPages}
         className="flex aspect-square w-[40px] items-center justify-center rounded-md border"
         onClick={() => {

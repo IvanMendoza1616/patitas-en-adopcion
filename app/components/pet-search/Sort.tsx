@@ -1,5 +1,6 @@
 import { useQueryParams } from "@/app/hooks/useQueryParams";
 import SelectInput from "../UI/inputs/SelectInput";
+import Button from "../UI/Button";
 
 type Props = {
   currentPage: number;
@@ -40,15 +41,15 @@ export default function Sort({
                     &quot;{queryParams.search}&quot;
                   </span>
                 </span>
-                <button
-                  className="rounded-md border px-4 py-1"
+                <Button
                   type="button"
+                  variant="secondary"
                   onClick={() => {
                     setQueryParams({ search: "", page: "1" });
                   }}
                 >
                   Clear Search
-                </button>
+                </Button>
               </>
             )}
           </div>

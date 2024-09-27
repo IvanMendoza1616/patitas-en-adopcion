@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import {
+  ArrowRightEndOnRectangleIcon,
   HomeIcon,
   MagnifyingGlassIcon,
   UserCircleIcon,
-  UserGroupIcon,
 } from "@heroicons/react/24/outline";
+import Button from "../UI/Button";
 
 type Props = {
   session: Session | null;
@@ -46,10 +47,10 @@ export default function MobileNavbar({ session }: Props) {
           >
             <XMarkIcon className="aspect-square w-7" />
           </button>
-          <div className="flex flex-col gap-4 font-semibold">
+          <div className="flex flex-col gap-8 font-semibold">
             {session ? (
               <>
-                <div className="mb-4 flex items-center gap-2">
+                <div className="mb-8 flex items-center gap-2">
                   <Image
                     className="rounded-full"
                     src={session.user.image}
@@ -69,19 +70,22 @@ export default function MobileNavbar({ session }: Props) {
                     setIsOpen(false);
                   }}
                 >
-                  <UserCircleIcon className="w-4" />
+                  <UserCircleIcon className="w-5" />
                   My Account
                 </Link>
               </>
             ) : (
               <Link
                 href="/sign-in"
-                className="mb-4 self-start rounded-md border px-4 py-2"
+                className="mb-4 self-start"
                 onClick={() => {
                   setIsOpen(false);
                 }}
               >
-                Sign In
+                <Button type="button">
+                  <ArrowRightEndOnRectangleIcon className="w-5" />
+                  Sign In
+                </Button>
               </Link>
             )}
             <Link
@@ -91,7 +95,7 @@ export default function MobileNavbar({ session }: Props) {
                 setIsOpen(false);
               }}
             >
-              <HomeIcon className="w-4" />
+              <HomeIcon className="w-5" />
               Home
             </Link>
             <Link
@@ -101,18 +105,8 @@ export default function MobileNavbar({ session }: Props) {
                 setIsOpen(false);
               }}
             >
-              <MagnifyingGlassIcon className="w-4" />
+              <MagnifyingGlassIcon className="w-5" />
               Search Pets
-            </Link>
-            <Link
-              href=""
-              className="flex items-center gap-2"
-              onClick={() => {
-                setIsOpen(false);
-              }}
-            >
-              <UserGroupIcon className="w-4" />
-              About Us
             </Link>
           </div>
         </div>

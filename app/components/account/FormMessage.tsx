@@ -1,3 +1,4 @@
+import { CheckIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -22,10 +23,19 @@ export default function Message({ success, message }: Props) {
   }, [message, pending]);
 
   return (
-    <p
-      className={`flex h-[30px] items-center px-2 py-1 ${isVisible ? (success ? "bg-gray-100" : "bg-gray-100") : ""}`}
+    <div
+      className={`flex h-[40px] items-center justify-center self-center rounded-md px-4 text-white ${isVisible ? (success ? "bg-green-500" : "bg-red-600") : ""}`}
     >
-      {isVisible && message}
-    </p>
+      {isVisible && (
+        <div className="flex items-center gap-2">
+          {success ? (
+            <CheckIcon className="w-5" />
+          ) : (
+            <XMarkIcon className="w-5" />
+          )}
+          {message}
+        </div>
+      )}
+    </div>
   );
 }

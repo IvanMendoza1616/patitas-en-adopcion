@@ -128,7 +128,7 @@ export async function updateShelter(
   return {
     ...prevState,
     shelterImageUrl: updatedShelterImageUrl,
-    success: false,
+    success: true,
     message: "Shelter updated successfully!",
   };
 }

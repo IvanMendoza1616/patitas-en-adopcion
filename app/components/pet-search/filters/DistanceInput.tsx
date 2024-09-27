@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { EsriProvider } from "leaflet-geosearch";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import SelectInput from "../../UI/inputs/SelectInput";
+import Button from "../../UI/Button";
 
 type Props = {
   queryParams: QueryParams;
@@ -104,9 +105,9 @@ export default function DistanceInput({
         <p className="text-lg font-semibold">Location</p>
         <div className="flex flex-col items-start gap-2">
           <p>{address || `Postal code: ${queryParams.postalCode}`}</p>
-          <button
-            className="rounded-md border px-4 py-1"
+          <Button
             type="button"
+            variant="secondary"
             onClick={() => {
               // Check if sort is distance related and if so, reset it
               const sort =
@@ -126,7 +127,7 @@ export default function DistanceInput({
             }}
           >
             Change
-          </button>
+          </Button>
         </div>
       </div>
       <div className={`flex flex-col gap-1 ${className}`}>

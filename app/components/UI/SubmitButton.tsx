@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { useFormStatus } from "react-dom";
+import Button from "./Button";
 
 type Props = {
   children: ReactNode;
@@ -8,12 +9,8 @@ type Props = {
 export default function SubmitButton({ children }: Props) {
   const { pending } = useFormStatus();
   return (
-    <button
-      className="w-full rounded-lg border bg-black px-4 py-3 text-white"
-      type="submit"
-      disabled={pending}
-    >
+    <Button type="submit" disabled={pending}>
       {pending ? "Loading" : children}
-    </button>
+    </Button>
   );
 }

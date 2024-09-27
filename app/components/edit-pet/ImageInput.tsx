@@ -1,6 +1,7 @@
 //import { XMarkIcon } from "@heroicons/react/16/solid";
 import Image from "next/image";
 import { ChangeEvent, useRef, useState } from "react";
+import Button from "../UI/Button";
 
 type Props = {
   currentImage: string;
@@ -94,13 +95,9 @@ export default function ImageInput({ currentImage, shelter }: Props) {
             <XMarkIcon className="h-5 w-5" />
           </button>
           */}
-          <button
-            className="rounded-md border px-4 py-2"
-            onClick={handleClick}
-            type="button"
-          >
+          <Button type="button" variant="secondary" onClick={handleClick}>
             Change Image
-          </button>
+          </Button>
         </div>
       ) : (
         <div
@@ -111,13 +108,9 @@ export default function ImageInput({ currentImage, shelter }: Props) {
         >
           <p>Drop an image to upload</p>
           <p>or</p>
-          <button
-            className="rounded-md border px-4 py-2"
-            onClick={handleClick}
-            type="button"
-          >
+          <Button type="button" variant="secondary" onClick={handleClick}>
             Select Image
-          </button>
+          </Button>
         </div>
       )}
     </div>
