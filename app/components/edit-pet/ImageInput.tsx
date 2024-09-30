@@ -101,7 +101,7 @@ export default function ImageInput({ currentImage, shelter }: Props) {
         </div>
       ) : (
         <div
-          className={`border-primary-light flex h-[400px] w-full flex-col items-center justify-center gap-4 rounded-lg border ${isDragging ? "bg-primary-light" : ""}`}
+          className={`flex h-[400px] w-full flex-col items-center justify-center gap-4 rounded-lg border ${isDragging ? "border-primary-light bg-primary-light" : ""}`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}

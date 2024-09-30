@@ -27,7 +27,7 @@ export default function TextInput({
         type="text"
         name={name}
         id={id}
-        className="w-full rounded-md border px-3 py-2"
+        className="w-full rounded-md border px-3 py-2 focus:outline-primary"
         defaultValue={defaultValue}
         required={required}
       />

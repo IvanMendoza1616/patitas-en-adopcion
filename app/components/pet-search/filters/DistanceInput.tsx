@@ -72,7 +72,7 @@ export default function DistanceInput({
             placeholder="Enter postal code"
             name="postalCode"
             id="postalCode"
-            className="w-full rounded-md border px-3 py-2"
+            className="w-full rounded-md border px-3 py-2 focus:outline-primary"
             onChange={(e) => {
               e.stopPropagation();
               setError("");

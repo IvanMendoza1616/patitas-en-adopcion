@@ -80,7 +80,7 @@ export default function EditPetForm({ pet }: Props) {
           type="date"
           name="birthdate"
           id="birthdate"
-          className="w-full rounded-md border px-3 py-2"
+          className="w-full rounded-md border px-3 py-2 focus:outline-primary"
           defaultValue={pet.birthdate.toISOString().slice(0, 10)}
           required
         />

@@ -33,7 +33,7 @@ export default function SearchInput() {
         type="text"
         name="search"
         id="search"
-        className="w-full rounded-md border px-3 py-2"
+        className="w-full rounded-md border px-3 py-2 focus:outline-primary"
       />
     </form>
   );

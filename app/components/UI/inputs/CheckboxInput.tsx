@@ -33,7 +33,7 @@ export default function CheckboxInput({
         defaultChecked={defaultChecked}
         name={name}
         id={id}
-        className={`accent-primary h-4 w-4 ${inverted ? "order-2" : ""}`}
+        className={`h-4 w-4 accent-primary ${inverted ? "order-2" : ""}`}
         value={value}
         onChange={onChange}
         required={required}
