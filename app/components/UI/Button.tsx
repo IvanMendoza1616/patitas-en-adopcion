@@ -16,12 +16,12 @@ export default function Button({
 }: Props) {
   const style =
     variant === "secondary"
-      ? "border py-1"
-      : `w-full rounded-lg shadow-md bg-black text-white ${type === "submit" ? "py-3" : "py-2"}`;
+      ? "py-1 bg-primary-light hover:bg-primary-light-hover"
+      : `w-full rounded-lg shadow-md bg-primary hover:bg-primary-hover text-white ${type === "submit" ? "py-3" : "py-2"}`;
 
   return (
     <button
-      className={`flex items-center justify-center gap-2 rounded-md px-4 ${style}`}
+      className={`flex items-center justify-center gap-2 rounded-md px-4 transition ease-in-out ${style}`}
       type={type}
       onClick={onClick}
       disabled={disabled}

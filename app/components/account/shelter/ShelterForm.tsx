@@ -21,7 +21,7 @@ export default function ShelterForm({ shelter }: Props) {
     () =>
       dynamic(() => import("../../UI/LocationInput"), {
         loading: () => (
-          <div className="flex h-[500px] w-full items-center justify-center bg-gray-100">
+          <div className="bg-primary-light flex h-[500px] w-full items-center justify-center">
             <p>A map is loading...</p>
           </div>
         ),

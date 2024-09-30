@@ -14,6 +14,7 @@ export default function SearchInput() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputRef.current) inputRef.current.blur();
+    if (search.length === 0) return;
     setQueryParams({ search, page: "1" });
   };
 

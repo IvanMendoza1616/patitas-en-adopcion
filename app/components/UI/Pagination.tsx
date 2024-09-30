@@ -62,7 +62,7 @@ export default function Pagination({ currentPage, totalPages }: Props) {
         <button
           type="button"
           disabled={start + index === currentPage}
-          className={`aspect-square w-[40px] items-center justify-center rounded-md border md:flex ${start + index === currentPage ? "bg-gray-100" : ""}`}
+          className={`aspect-square w-[40px] items-center justify-center rounded-md border md:flex ${start + index === currentPage ? "bg-primary-light border-primary-light" : ""}`}
           key={start + index}
           onClick={() => {
             setQueryParams({ page: (start + index).toString() });

@@ -69,11 +69,13 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="flex flex-col gap-1">
         <h3 className="mb-1 text-xl font-semibold">Contact Information</h3>
         <div className="flex items-center gap-2">
-          <PhoneIcon className="w-4" />
-          <p>{shelter.phone}</p>
+          <PhoneIcon className="w-4 text-primary" />
+          <a target="_blank" rel="noreferrer" href={`tel:${shelter.phone}`}>
+            {shelter.phone}
+          </a>
         </div>
         <div className="flex items-center gap-2">
-          <EnvelopeIcon className="w-4" />
+          <EnvelopeIcon className="w-4 text-primary" />
           <a target="_blank" rel="noreferrer" href={`mailto:${shelter.email}`}>
             {shelter.email}
           </a>
@@ -85,22 +87,28 @@ export default async function Page({ params }: { params: { id: string } }) {
           <div className="flex gap-4">
             {shelter.facebook && (
               <a
-                className="flex items-center justify-center rounded-md border px-3 py-1"
+                className="flex items-center justify-center rounded-md border border-primary-light px-3 py-1"
                 target="_blank"
                 rel="noreferrer"
                 href={shelter.facebook}
               >
-                <FontAwesomeIcon className="h-4 w-4" icon={faFacebookF} />
+                <FontAwesomeIcon
+                  className="h-4 w-4 text-primary"
+                  icon={faFacebookF}
+                />
               </a>
             )}
             {shelter.instagram && (
               <a
-                className="rounded-md border px-3 py-2"
+                className="rounded-md border border-primary-light px-3 py-2"
                 target="_blank"
                 rel="noreferrer"
                 href={shelter.instagram}
               >
-                <FontAwesomeIcon className="h-5 w-5" icon={faInstagram} />
+                <FontAwesomeIcon
+                  className="h-5 w-5 text-primary"
+                  icon={faInstagram}
+                />
               </a>
             )}
           </div>

@@ -11,7 +11,7 @@ export default function Testimonials() {
               <Image
                 src={`${process.env.AWS_BUCKET_URL}/assets/woman.jpg`}
                 alt="testimonial person 1"
-                className="aspect-square w-[100px] rounded-full bg-gray-100"
+                className="bg-primary-light aspect-square w-[100px] rounded-full"
                 width={100}
                 height={100}
               />
@@ -19,7 +19,7 @@ export default function Testimonials() {
                 &quot;Adopting Max was the best decision we ever made. He&apos;s
                 brought so much joy to our family!&quot;
               </p>
-              <p className="font-semibold">Sarah Johnson</p>
+              <p className="text-primary font-semibold">Sarah Johnson</p>
             </div>
           </div>
           <div className="flex flex-col gap-8 md:flex-row">
@@ -27,7 +27,7 @@ export default function Testimonials() {
               <Image
                 src={`${process.env.AWS_BUCKET_URL}/assets/man.jpg`}
                 alt="testimonial person 1"
-                className="aspect-square w-[100px] rounded-full bg-gray-100"
+                className="bg-primary-light aspect-square w-[100px] rounded-full"
                 width={100}
                 height={100}
               />
@@ -36,7 +36,7 @@ export default function Testimonials() {
                 incredibly helpful. We couldn&apos;t be happier with our new
                 cat, Luna.&quot;
               </p>
-              <p className="font-semibold">Michael Chen</p>
+              <p className="text-primary font-semibold">Michael Chen</p>
             </div>
           </div>
         </div>

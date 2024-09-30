@@ -13,7 +13,7 @@ export default async function Navbar() {
       <nav className="mx-auto grid max-w-[1200px] grid-cols-3 content-center gap-x-8 gap-y-10 px-8 py-10 md:grid-cols-3">
         <div className="col-span-2 md:col-span-1">
           <Link className="text-2xl font-bold" href="/">
-            Adopt a Pet
+            Adopt a <span className="text-primary">Pet</span>
           </Link>
         </div>
         <div className="hidden items-center justify-end gap-4 md:order-3 md:flex">

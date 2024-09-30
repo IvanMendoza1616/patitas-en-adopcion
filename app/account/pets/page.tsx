@@ -7,6 +7,8 @@ import Link from "next/link";
 import SectionContainer from "@/app/components/account/container/SectionContainer";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import Button from "@/app/components/UI/Button";
+import { PlusIcon } from "@heroicons/react/16/solid";
 
 export const metadata: Metadata = {
   title: "My Pets",
@@ -34,13 +36,12 @@ export default async function Page({
   return (
     <SectionContainer title="My Pets">
       <div className="flex flex-col gap-2">
-        <Link
-          href="/new-pet"
-          className="mr-4 self-end rounded-md border px-4 py-2"
-        >
-          + Add Pet
+        <Link href="/new-pet" className="mr-4 self-end">
+          <Button type="button">
+            <PlusIcon className="w-4" /> Add Pet
+          </Button>
         </Link>
-        <div className="flex flex-col gap-4 px-4 sm:flex-row sm:justify-between">
+        <div className="px-4sm:flex-row flex flex-col gap-4 sm:justify-between">
           <SearchName />
           <AdoptedToggle />
         </div>

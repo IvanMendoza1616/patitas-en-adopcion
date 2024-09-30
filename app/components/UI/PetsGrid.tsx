@@ -125,7 +125,7 @@ export default function PetsGrid({ params, shelter }: Props) {
 
   if (!dataFetched.success && !isLoading) {
     return (
-      <div className="flex h-[300px] items-center justify-center rounded-md bg-gray-100 p-4 md:h-full">
+      <div className="bg-primary-light flex h-[300px] items-center justify-center rounded-md p-4 md:h-full">
         There was an error fetching the pets
       </div>
     );
@@ -155,7 +155,7 @@ export default function PetsGrid({ params, shelter }: Props) {
       {isLoading ? (
         <LoadingPets />
       ) : dataFetched.data.length === 0 ? (
-        <div className="flex h-[300px] items-center justify-center rounded-md bg-gray-100 p-4">
+        <div className="bg-primary-light flex h-[300px] items-center justify-center rounded-md p-4">
           <p>There are no pets with this parameters</p>
         </div>
       ) : (

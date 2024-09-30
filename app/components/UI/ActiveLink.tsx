@@ -14,7 +14,7 @@ export default function ActiveLink({ href, children }: Props) {
 
   return (
     <Link
-      className={`${isActive ? "bg-gray-100" : ""} flex items-center gap-2 rounded-md p-4 sm:rounded-none`}
+      className={`${isActive ? "bg-primary-light" : "hover:bg-primary-light-hover"} flex items-center gap-2 rounded-md p-4 transition ease-in-out sm:rounded-none`}
       href={href}
     >
       {children}

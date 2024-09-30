@@ -90,7 +90,7 @@ export default function DistanceInput({
             type="button"
             disabled={loading}
             onClick={handleSubmitPostalCode}
-            className="self-stretch rounded-md border p-2"
+            className="self-stretch rounded-md border p-2 transition ease-in-out hover:border-primary-light hover:bg-primary-light"
           >
             <MagnifyingGlassIcon className="h-5 w-5" />
           </button>

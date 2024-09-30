@@ -24,7 +24,11 @@ export default function Filters() {
             <p className="text-lg font-semibold">Location</p>
             <div className="flex items-center gap-2">
               <div className="flex h-[42px] w-full animate-pulse items-center gap-2 rounded-md bg-gray-100" />
-              <button className="self-stretch rounded-md border p-2" disabled>
+              <button
+                type="button"
+                className="self-stretch rounded-md border p-2"
+                disabled
+              >
                 <MagnifyingGlassIcon className="h-5 w-5" />
               </button>
             </div>

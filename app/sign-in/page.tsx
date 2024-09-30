@@ -36,10 +36,13 @@ export default async function Page({
             }}
           >
             <button
-              className="flex w-full items-center justify-center gap-2 rounded-md border px-2 py-2"
               type="submit"
+              className="flex w-full items-center justify-center gap-2 rounded-md border px-2 py-2 transition ease-in-out hover:border-primary-light hover:bg-primary-light"
             >
-              <FontAwesomeIcon className="h-4 w-4" icon={faGoogle} />
+              <FontAwesomeIcon
+                className="h-4 w-4 text-primary"
+                icon={faGoogle}
+              />
               Sign In with Google
             </button>
           </form>
@@ -52,10 +55,13 @@ export default async function Page({
             }}
           >
             <button
-              className="flex w-full items-center justify-center gap-2 rounded-md border px-2 py-2"
               type="submit"
+              className="flex w-full items-center justify-center gap-2 rounded-md border px-2 py-2 transition ease-in-out hover:border-primary-light hover:bg-primary-light"
             >
-              <FontAwesomeIcon className="h-4 w-4" icon={faFacebookF} />
+              <FontAwesomeIcon
+                className="h-4 w-4 text-primary"
+                icon={faFacebookF}
+              />
               Sign In with Facebook
             </button>
           </form>
@@ -66,10 +72,13 @@ export default async function Page({
             }}
           >
             <button
-              className="flex w-full items-center justify-center gap-2 rounded-md border px-2 py-2"
               type="submit"
+              className="flex w-full items-center justify-center gap-2 rounded-md border px-2 py-2 transition ease-in-out hover:border-primary-light hover:bg-primary-light"
             >
-              <FontAwesomeIcon className="h-4 w-4" icon={faGithub} />
+              <FontAwesomeIcon
+                className="h-4 w-4 text-primary"
+                icon={faGithub}
+              />
               Sign In with GitHub
             </button>
           </form>
