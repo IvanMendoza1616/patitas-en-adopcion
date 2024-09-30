@@ -3,7 +3,6 @@ import ProfileContainer from "@/app/components/UI/containers/ProfileContainer";
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
