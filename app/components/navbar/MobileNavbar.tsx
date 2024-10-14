@@ -34,7 +34,7 @@ export default function MobileNavbar({ session }: Props) {
       <AnimatePresence>
         {isOpen && (
           <div
-            className={`fixed left-0 top-0 z-10 h-screen w-screen md:hidden`}
+            className={`fixed left-0 top-0 z-20 h-screen w-screen md:hidden`}
           >
             <motion.div
               key="navbarBackground"
