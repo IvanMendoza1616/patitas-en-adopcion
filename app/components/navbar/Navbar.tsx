@@ -9,7 +9,7 @@ import Button from "../UI/Button";
 export default async function Navbar() {
   const session = await auth();
   return (
-    <div className="mb-8 shadow-md">
+    <div className="mb-8 bg-primary-light">
       <nav className="mx-auto grid max-w-[1200px] grid-cols-3 content-center gap-x-8 gap-y-10 px-8 py-10 md:grid-cols-3">
         <div className="col-span-2 md:col-span-1">
           <Link className="text-2xl font-bold" href="/">

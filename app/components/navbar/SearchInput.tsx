@@ -21,10 +21,10 @@ export default function SearchInput() {
 
   return (
     <form
-      className="col-span-3 flex items-center justify-center gap-0 overflow-hidden rounded-md border focus-within:outline focus-within:outline-primary md:col-span-1"
+      className="col-span-3 flex items-center justify-center gap-0 overflow-hidden rounded-md bg-primary-light-hover focus-within:outline focus-within:outline-primary md:col-span-1"
       onSubmit={handleSubmit}
     >
-      <MagnifyingGlassIcon className="ml-4 mr-2 h-5 w-5 text-gray-400" />
+      <MagnifyingGlassIcon className="ml-4 mr-2 h-5 w-5 text-gray-600" />
       <input
         placeholder="Search pets..."
         ref={inputRef}
@@ -35,7 +35,7 @@ export default function SearchInput() {
         type="text"
         name="search"
         id="search"
-        className="w-full py-2 pr-3 focus:outline-none"
+        className="w-full bg-transparent py-2 pr-3 placeholder:text-gray-600 focus:outline-none"
       />
     </form>
   );

@@ -6,11 +6,11 @@ import {
 
 export default function HowItWorks() {
   return (
-    <section className="bg-gradient-to-b from-white to-primary-light px-4">
+    <section className="bg-gradient-to-b from-white to-primary-light px-4 py-8">
       <div className="m-auto flex max-w-[1200px] flex-col items-center justify-center gap-12 py-16 text-center md:py-32">
         <h2 className="text-4xl font-bold">How It Works</h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border bg-white p-8 shadow-md">
+          <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border bg-white px-8 py-12 shadow-md">
             <p className="absolute left-0 top-0 flex aspect-square w-[40px] items-center justify-center rounded-br-lg bg-primary text-white">
               1
             </p>
@@ -18,7 +18,7 @@ export default function HowItWorks() {
             <h3 className="text-xl font-bold">Search</h3>
             <p>Browse our available pets and find your perfect match.</p>
           </div>
-          <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border bg-white p-8 shadow-md">
+          <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border bg-white px-8 py-12 shadow-md">
             <p className="absolute left-0 top-0 flex aspect-square w-[40px] items-center justify-center rounded-br-lg bg-primary text-white">
               2
             </p>
@@ -26,7 +26,7 @@ export default function HowItWorks() {
             <h3 className="text-xl font-bold">Apply</h3>
             <p>Fill out our adoption application and meet your new friend.</p>
           </div>
-          <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border bg-white p-8 shadow-md">
+          <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border bg-white px-8 py-12 shadow-md">
             <p className="absolute left-0 top-0 flex aspect-square w-[40px] items-center justify-center rounded-br-lg bg-primary text-white">
               3
             </p>

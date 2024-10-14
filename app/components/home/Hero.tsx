@@ -5,8 +5,9 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="px-4">
-      <div className="relative m-auto grid max-w-[1200px] grid-cols-1 items-center overflow-hidden rounded-lg bg-primary-light px-8 py-0 md:grid-cols-2">
+    <section className="relative -z-10 -mt-[154px] overflow-hidden bg-primary-light px-4 pt-[140px]">
+      <div className="absolute left-[50%] top-[80%] h-[1000px] w-[2000px] -translate-x-[50%] -rotate-[12deg] bg-[#AAA4F1] md:top-[80%]" />
+      <div className="relative m-auto grid max-w-[1200px] grid-cols-1 items-center overflow-hidden px-8 py-0 md:grid-cols-2">
         <div className="z-10 flex flex-col justify-center gap-4 pb-0 pt-8 sm:pt-16 md:min-w-[450px] md:pb-16 md:pl-16">
           <h1 className="text-5xl font-bold md:text-6xl md:leading-[68px]">
             Find your next best friend!
@@ -31,13 +32,15 @@ export default function Hero() {
             </Link>
           </div>
         </div>
-        <Image
-          src={"/hero.png"}
-          width={800}
-          height={800}
-          className="aspect-square"
-          alt="hero image"
-        />
+        <div className="relative">
+          <Image
+            src={"/hero.png"}
+            width={800}
+            height={800}
+            className="aspect-square"
+            alt="hero image"
+          />
+        </div>
       </div>
     </section>
   );
